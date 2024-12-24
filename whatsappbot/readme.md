@@ -35,5 +35,9 @@ python3 main.py
 
 ![demo](demo.png)
 
+
+## Note
+This might or might not work without Linnux Environment(not optimized for others)
+
 ## 🤖 Author
 [Biswaketan](https://github.com/neonite2217/)
