@@ -1,6 +1,6 @@
 # 🤖 Simple Codebot
 
-![Chatbot Demo](demo.png)
+![Chatbot Demo](image.png)
 
 ## 🛠️ Description
 This project features a basic chatbot implemented in Python using the Hugging Face Transformers library. The chatbot engages in a text-based conversation with the user through a simple GUI. Although there might be a slight delay during the initial load due to the model being loaded into memory, once loaded, the chatbot is quite responsive and provides a delightful text-generation based interaction. The language model Microsoft-Phi-1 is a Transformer with 1.3 billion parameters, specialized for basic Python coding.
