@@ -1,0 +1,46 @@
+{
+  "mcpServers": {
+    "postgresql": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--network", "host",
+        "-e", "DATABASE_URL=postgresql://hradmin:hrpass@host.docker.internal:5432/companydb",
+        "mcp/postgresql"
+      ],
+      "env": {
+        "DATABASE_URL": "postgresql://hradmin:hrpass@host.docker.internal:5432/companydb"
+      }
+    },
+    "gmail": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i", 
+        "--rm",
+        "-e", "GMAIL_EMAIL=hr.demo@neo.corp",
+        "-e", "GMAIL_APP_PASSWORD=your-16-char-app-password-here",
+        "mcp/gmail"
+      ],
+      "env": {
+        "GMAIL_EMAIL": "hr.demo@neo.corp",
+        "GMAIL_APP_PASSWORD": "your-16-char-app-password-here"
+      }
+    },
+    "obsidian": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-v", "/Users/yourusername/Documents/Obsidian Vault:/vault:rw",
+        "mcp/obsidian"
+      ],
+      "env": {
+        "OBSIDIAN_VAULT_PATH": "/vault"
+      }
+    }
+  }
+}

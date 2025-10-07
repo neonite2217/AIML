@@ -1,0 +1,3 @@
+This is sproject that uses coingecko SSE remote server to remotely access crypto coin prices
+local py servers like news stdio and weather with open weather api key
+

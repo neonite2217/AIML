@@ -1,0 +1,182 @@
+# Claude News - Demo Queries and Examples
+
+## Basic Information Queries
+
+### Crypto Prices
+"What's the current price of Bitcoin?"
+"Show me the top 10 cryptocurrencies by market cap"
+"How has Ethereum performed in the last 24 hours?"
+"Get me the current prices of Bitcoin, Ethereum, and Solana"
+
+### Weather Information
+"What's the current weather in London?"
+"Give me a 5-day forecast for New York"
+"How's the weather in Tokyo, Japan?"
+"What's the temperature in Paris, France right now?"
+
+### News Headlines
+"Show me the top 5 news headlines from the US"
+"Get technology news from the UK"
+"Search for news about artificial intelligence"
+"What are the latest headlines in the business category?"
+
+## Combined Information Requests
+
+### Morning Briefing
+"Give me a morning briefing with:
+1. Current weather in London
+2. Top 3 US news headlines
+3. Bitcoin and Ethereum prices
+4. Any major crypto market movements"
+
+### Market Summary
+"Create a market summary including:
+1. Top 5 cryptocurrency prices and 24h changes
+2. Search for news about 'cryptocurrency regulation'
+3. Current weather in major financial centers"
+
+### Travel Planning
+"I'm traveling to Paris tomorrow, give me:
+1. Weather forecast for Paris, France
+2. Search for news about 'France travel'
+3. Current market conditions"
+
+## Specific Use Cases
+
+### Investment Research
+"Help me research Bitcoin by:
+1. Getting current BTC price and 24h change
+2. Searching for recent Bitcoin news
+3. Checking if weather might affect mining operations"
+
+### Event Planning
+"I'm planning an outdoor event in London next week:
+1. Get 5-day weather forecast for London
+2. Search for news about 'London events'
+3. Check if any major news might affect attendance"
+
+### Daily Routine
+"My daily information check:
+1. Weather in my city (London)
+2. Top 3 world news headlines
+3. Crypto market overview
+4. Technology news updates"
+
+## Testing Queries
+
+### Server Connectivity
+"List all available information tools"
+"What crypto data can you access?"
+"What weather information do you have?"
+"Show me your news capabilities"
+
+### Error Handling
+"Get weather for an invalid city name"
+"Search for news with empty query"
+"Request crypto data for non-existent coin"
+
+### API Limits
+"Get top 20 news headlines" (test pagination)
+"Search for very specific news terms"
+"Request detailed weather data"
+
+## Advanced Workflows
+
+### Comparative Analysis
+"Compare information sources:
+1. Get Bitcoin price from crypto data
+2. Search for Bitcoin news sentiment
+3. Check weather in major crypto mining regions"
+
+### Trend Analysis
+"Analyze current trends:
+1. Top trending cryptocurrencies
+2. Most popular news topics today
+3. Weather patterns in major cities"
+
+### Decision Support
+"Help me decide on outdoor plans:
+1. Weather forecast for this weekend
+2. News about local events or disruptions
+3. General market sentiment (crypto/news)"
+
+## Automation Examples
+
+### Scheduled Updates
+"Set up my daily 9 AM briefing with weather, news, and crypto prices"
+"Create hourly crypto price alerts for major coins"
+"Weekly weather and news summary for planning"
+
+### Conditional Queries
+"If Bitcoin drops below $40,000, get related news"
+"If weather shows rain, search for indoor activity news"
+"If major news breaks, get crypto market reaction"
+
+## Error Recovery Examples
+
+### Fallback Scenarios
+"If weather API fails, get news about weather conditions"
+"If crypto data unavailable, search for crypto news"
+"If news API down, get weather and crypto only"
+
+### Retry Logic
+"Retry failed weather request with different city format"
+"Try alternative news sources if primary fails"
+"Use backup crypto data sources"
+
+## Integration Testing
+
+### Multi-Protocol Test
+"Test all transport protocols:
+1. SSE remote crypto data
+2. Local stdio weather server
+3. Local stdio news server"
+
+### Performance Test
+"Rapid-fire requests:
+1. Quick weather check
+2. Fast crypto price lookup
+3. Brief news headline scan"
+
+### Reliability Test
+"Stress test information gathering:
+1. Multiple weather locations
+2. Various crypto coins
+3. Different news categories"
+
+## Custom Scenarios
+
+### Business Intelligence
+"Market intelligence report:
+1. Crypto market cap changes
+2. Financial news sentiment
+3. Weather impact on commodities"
+
+### Personal Assistant
+"Personal daily digest:
+1. Local weather and commute conditions
+2. News relevant to my interests
+3. Investment portfolio updates"
+
+### Research Support
+"Research assistance for [topic]:
+1. Related news articles
+2. Market data if applicable
+3. Environmental factors (weather)"
+
+## Troubleshooting Queries
+
+### Configuration Check
+"Verify all servers are responding correctly"
+"Test API key configurations"
+"Check transport protocol functionality"
+
+### Data Validation
+"Validate data consistency across sources"
+"Check timestamp accuracy"
+"Verify data format compliance"
+
+### Performance Monitoring
+"Monitor response times for each service"
+"Check for rate limiting issues"
+"Validate error handling"
