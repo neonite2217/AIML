@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "coingecko-sse": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-coingecko"],
+      "env": {}
+    },
+    "weather": {
+      "command": "python",
+      "args": ["/path/to/claude-news/weather_server.py"],
+      "env": {
+        "OPENWEATHER_API_KEY": "your_openweather_api_key_here",
+        "DEFAULT_CITY": "London",
+        "DEFAULT_COUNTRY": "UK"
+      }
+    },
+    "news": {
+      "command": "python",
+      "args": ["/path/to/claude-news/news_server.py"],
+      "env": {
+        "NEWS_API_KEY": "your_news_api_key_here",
+        "DEFAULT_NEWS_COUNTRY": "us"
+      }
+    }
+  }
+}

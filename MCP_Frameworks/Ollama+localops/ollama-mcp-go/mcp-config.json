@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "localops-assistant": {
+      "command": "./localops",
+      "args": ["mcp"],
+      "cwd": ".",
+      "env": {
+        "OLLAMA_MODEL": "llama3.2:3b"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "get_system_info",
+        "list_files"
+      ]
+    }
+  }
+}
