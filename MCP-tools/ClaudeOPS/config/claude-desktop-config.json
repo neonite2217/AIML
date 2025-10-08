@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "claude-ops": {
+      "command": "python",
+      "args": ["/path/to/claudeops/claude_ops_server.py"],
+      "env": {
+        "USER_HOME": "/Users/yourusername",
+        "WORKSPACE_DIR": "/Users/yourusername/workspace",
+        "CONFIG_DIR": "/Users/yourusername/.config/claude-ops",
+        "PYTHONPATH": "/path/to/claudeops"
+      }
+    }
+  }
+}
