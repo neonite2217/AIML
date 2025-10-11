@@ -1,0 +1,113 @@
+Mcp variations
+Claude+docker-ai hr CONFIGURATIONS:MCP with Persistent Context/Memory - Server that maintains conversation state across sessions using PostgreSQL
+claude + local MCP server-ClaudeOps (Claude Desktop):https://github.com/punkpeye/awesome-mcp-servers.git
+Claude+remote and local py servers(SSE&stdio)- mini remote info suite CONFIGURATION
+claude+railway- personal knowledge base {server hosted and accessed through REST API}
+
+build your own client instead of claude desktop
+ollama + Custom MCP:
+https://medium.com/data-science-in-your-pocket/model-context-protocol-mcp-using-ollama-e719b2d9fd7a
+https://medium.com/%40alejandro7899871776/ollama-mcp-servers-from-scratch-c35ca199267c
+https://mcpservers.org/servers/rawveg/ollama-mcp
+
+custom client+ local server:
+https://github.com/ausboss/mcp-ollama-agent?utm_source=chatgpt.com
+----------------------------------------------------------------------------------------------------------------
+
+Multi-Model MCP Gateway - One MCP server that routes to multiple LLMs (Claude, GPT-4, Ollama) based on task type
+
+Shows architectural thinking and cost optimization
+
+
+ClaudeOps (Claude Desktop)
+Claude Ops MCP server — Claude becomes like your personal sysadmin.
+Combining File Manager → lets Claude see/edit files.
+Shell Executor (safe wrapper) → lets Claude execute only allowed commands (install, update, version check).
+Task Runner → triggers structured workflows (like make build, npm run dev, python script.py).Claude can control your machine in a safe, bounded way.
+Claude uses it to: browse files, run tasks, install/update software.
+🛠️ How this could work
+
+🔒 Safety considerations
+Whitelist strictly — no arbitrary shell commands.
+Keep it in user space (no root unless you explicitly allow).
+Logs everything Claude does.
+Add a “confirm before executing dangerous commands” flag.
+File Manager tool-Expose endpoints: list_dir, read_file, write_file, delete_file.
+Shell Executor (whitelist)-Add path whitelisting so it can’t mess with /etc/ unless user allows
+Define JSON example:
+
+{
+  "allowed_commands": {
+    "system": ["sudo apt update", "sudo apt upgrade", "brew update", "brew upgrade"],
+    "version": ["python --version", "node --version", "docker --version"],
+    "install": ["pip install", "npm install", "brew install"]
+  }
+}
+MCP server only runs commands that match whitelist patterns.
+
+Task Runner
+Predefine tasks in a tasks.json:example
+{
+  "build": "make build",
+  "start_server": "npm run dev",
+  "train_model": "python train.py"
+}
+⚡ Example workflows Claude could do
+“Check if Node, Python, and Docker are installed, and tell me the versions.”
+“Update my brew packages.”
+“Create a new hello.py file, write some code, and run it.”
+“Run make build in this project and tell me if it succeeded.”
+“Install FastAPI and start a dev server.”
+
+----------------------------------------------------------------------------------------------------------------
+
+a mini remote MCP “info suite” made entirely from existing free/public servers:
+
+Weather → to check local/global weather.
+News → to fetch latest headlines.
+WolframAlpha → to clarify news topics with factual/math/scientific answers.
+Wikipedia → to dive into historical/deeper context.
+
+{
+  "servers": {
+    "weather": {
+      "url": "https://weather.mcpservers.org"
+    },
+    "news": {
+      "url": "https://news.mcpservers.org"
+    },
+    "wolframalpha": {
+      "url": "https://wolframalpha.mcpservers.org"
+    },
+    "wikipedia": {
+      "url": "https://wikipedia.mcpservers.org"
+    }
+  }
+}
+
+⚡ Workflow in Claude
+
+You: “What’s the weather in Bhubaneswar today?”
+→ Weather MCP server answers.
+
+You: “Summarize the top 3 news stories from India.”
+→ News MCP server provides headlines.
+
+You: “I don’t understand what ‘Ethanol Blending E20’ means in this article.”
+→ WolframAlpha MCP server explains.
+
+You: “Give me historical background on this policy and ethanol scam being talked about”
+→ Wikipedia MCP server fetches history.
+
+This is exactly the kind of stack you can plug into Claude right away without hosting anything yourself.
+
+https://github.com/sylviangth/awesome-remote-mcp-servers.git for more fun servers
+
+Later expansion
+Bundle them into a hub server [i.e. how docker runs mcp servers](so you only configure one endpoint in Claude).
+
+----------------------------------------------------------------------------------------------------------------
+LocalOps (Ollama / any LLM)
+Same MCP server, but client is Ollama CLI or a custom MCP client.
+Ollama model (say llama3 or mistral) can issue MCP tool calls.
+localOps / AITerminal → when plugged into any MCP client, e.g. Ollama.
