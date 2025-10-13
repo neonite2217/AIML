@@ -1,0 +1,63 @@
+name: mcp-knowledge-server
+type: nodejs
+
+build:
+  node_version: "20"
+  build_command: |
+    npm ci --only=production
+    npm run build
+
+runtime:
+  start_command: npm start
+
+environment:
+  ENABLE_WEB_API: "true"
+  NODE_ENV: "production"
+  DATABASE_PATH: "/app/data/knowledge.db"
+
+ports:
+  - port: 3000
+    protocol: http
+
+volumes:
+  - name: knowledge-data
+    mount_path: /app/data
+    size: 1GB
+
+health_check:
+  http_path: /health
+  interval: 30
+  timeout: 10
+  healthy_threshold: 2
+  unhealthy_threshold: 3
+
+resources:
+  instances: 1
+  memory: 512MB
+  cpu: 0.5
+
+auto_scaling:
+  enabled: true
+  min_instances: 1
+  max_instances: 3
+  target_cpu: 70
+  target_memory: 80
+
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # Daily at 2 AM UTC
+  retention_days: 30
+  volumes:
+    - knowledge-data
+
+monitoring:
+  enabled: true
+  alerts:
+    - metric: cpu
+      threshold: 80
+      duration: 5m
+      email: admin@example.com
+    - metric: memory
+      threshold: 90
+      duration: 3m
+      email: admin@example.com

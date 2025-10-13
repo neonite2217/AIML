@@ -1,0 +1,44 @@
+## Overview
+This MCP (Model Context Protocol) server provides Claude and other AI models with persistent knowledge management capabilities. It features:
+
+- **Persistent Storage**: SQLite databasWhat This MCP Server Does
+I've created a Knowledge Base MCP Server that gives Claude (or any AI) superpowers by providing:
+Core Features:
+
+Persistent Memory: Unlike standard Claude conversations, this server maintains a permanent SQLite database of knowledge
+Structured Information Management: Organize knowledge by categories, tags, and metadata
+Advanced Search: Query your knowledge base with filters and full-text search
+Context Creation: Build named contexts that group related information for specific tasks
+REST API: Optional web interface for external integrations
+
+Practical Use Cases:
+
+Personal Wiki: Store technical notes, code snippets, and documentation
+Project Management: Keep track of project details, decisions, and requirements
+Learning Assistant: Save and retrieve learning materials, notes, and insights
+Research Database: Organize research findings, sources, and citations
+Team Knowledge Base: Share collective knowledge across team members
+
+Why This Architecture:
+
+TypeScript: Type safety and better developer experience
+MCP Protocol: Direct integration with Claude and other AI models
+SQLite: Lightweight, serverless database perfect for Sevalla
+Express API: Optional REST endpoints for web/mobile access
+Zod Validation: Runtime type checking for data integrity
+
+railway Deployment Benefits:
+
+Zero-config deployment: Simple YAML configuration
+Automatic SSL: HTTPS enabled by default
+Persistent volumes: Data survives container restarts
+Auto-scaling: Handle traffic spikes automatically
+Built-in monitoring: Health checks and metrics
+
+The server acts as a "second brain" for AI models, allowing them to remember information across sessions and provide contextual responses based on stored knowledge. This is particularly powerful when combined with Claude's reasoning capabilities.
+
+
+claude+railway- personal knowledge base {server hosted sse and accessed through REST API}
+ some places sevalla is menioned instead of railway make adjustments
+ add demo conifg like how to generate api keys add those to config etc separet files as per convinence or
+ when it just makes sense
