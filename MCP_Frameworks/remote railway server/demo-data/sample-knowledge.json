@@ -1,0 +1,112 @@
+[
+  {
+    "category": "tech",
+    "title": "Docker Best Practices",
+    "content": "1. Use multi-stage builds to reduce image size\n2. Minimize the number of layers\n3. Use .dockerignore to exclude unnecessary files\n4. Run containers as non-root users\n5. Use specific version tags, not 'latest'\n6. Keep images small and focused\n7. Use COPY instead of ADD when possible\n8. Leverage build cache effectively",
+    "tags": ["docker", "devops", "containers", "best-practices"],
+    "metadata": {
+      "source": "Docker documentation",
+      "difficulty": "intermediate",
+      "last_updated": "2025-01-04"
+    }
+  },
+  {
+    "category": "tech",
+    "title": "TypeScript Advanced Types",
+    "content": "Advanced TypeScript patterns:\n\n1. Conditional Types: T extends U ? X : Y\n2. Mapped Types: { [K in keyof T]: T[K] }\n3. Template Literal Types: `${string}-${number}`\n4. Utility Types: Partial<T>, Required<T>, Pick<T, K>\n5. Generic Constraints: T extends keyof U\n6. Intersection Types: A & B\n7. Union Types: A | B\n8. Type Guards: typeof, instanceof, in operator",
+    "tags": ["typescript", "javascript", "types", "programming"],
+    "metadata": {
+      "source": "TypeScript handbook",
+      "difficulty": "advanced",
+      "examples": true
+    }
+  },
+  {
+    "category": "devops",
+    "title": "Kubernetes Deployment Strategies",
+    "content": "Common Kubernetes deployment strategies:\n\n1. **Rolling Update**: Default strategy, gradually replaces old pods\n2. **Blue-Green**: Two identical environments, switch traffic\n3. **Canary**: Deploy to subset of users first\n4. **A/B Testing**: Split traffic between versions\n5. **Shadow**: Mirror traffic to new version without affecting users\n6. **Recreate**: Stop all old pods, then start new ones\n\nChoose based on:\n- Downtime tolerance\n- Resource availability\n- Risk tolerance\n- Testing requirements",
+    "tags": ["kubernetes", "deployment", "devops", "strategies"],
+    "metadata": {
+      "source": "Kubernetes documentation",
+      "difficulty": "intermediate",
+      "use_cases": ["production", "staging"]
+    }
+  },
+  {
+    "category": "security",
+    "title": "API Security Checklist",
+    "content": "Essential API security measures:\n\n**Authentication & Authorization**\n- Use OAuth 2.0 or JWT tokens\n- Implement proper RBAC\n- Validate tokens on every request\n\n**Input Validation**\n- Sanitize all inputs\n- Use parameterized queries\n- Implement rate limiting\n\n**Data Protection**\n- Use HTTPS everywhere\n- Encrypt sensitive data\n- Implement proper CORS\n\n**Monitoring**\n- Log security events\n- Monitor for anomalies\n- Set up alerts for suspicious activity",
+    "tags": ["security", "api", "authentication", "best-practices"],
+    "metadata": {
+      "source": "OWASP API Security Top 10",
+      "difficulty": "intermediate",
+      "compliance": ["GDPR", "SOC2"]
+    }
+  },
+  {
+    "category": "database",
+    "title": "PostgreSQL Performance Tuning",
+    "content": "Key PostgreSQL performance optimizations:\n\n**Configuration**\n- shared_buffers: 25% of RAM\n- effective_cache_size: 75% of RAM\n- work_mem: Adjust based on concurrent connections\n- maintenance_work_mem: For VACUUM and CREATE INDEX\n\n**Indexing**\n- Create indexes on frequently queried columns\n- Use partial indexes for filtered queries\n- Consider composite indexes for multi-column queries\n- Monitor index usage with pg_stat_user_indexes\n\n**Query Optimization**\n- Use EXPLAIN ANALYZE to understand query plans\n- Avoid SELECT * in production\n- Use appropriate JOIN types\n- Consider materialized views for complex aggregations",
+    "tags": ["postgresql", "database", "performance", "optimization"],
+    "metadata": {
+      "source": "PostgreSQL documentation",
+      "difficulty": "advanced",
+      "tools": ["pg_stat_statements", "pgbench"]
+    }
+  },
+  {
+    "category": "frontend",
+    "title": "React Performance Optimization",
+    "content": "React performance optimization techniques:\n\n**Component Optimization**\n- Use React.memo for pure components\n- Implement useMemo for expensive calculations\n- Use useCallback for stable function references\n- Avoid inline objects and functions in JSX\n\n**Bundle Optimization**\n- Code splitting with React.lazy and Suspense\n- Tree shaking to remove unused code\n- Optimize images and assets\n- Use production builds\n\n**State Management**\n- Keep state as local as possible\n- Use context sparingly\n- Consider state management libraries for complex apps\n- Normalize state structure",
+    "tags": ["react", "javascript", "performance", "frontend"],
+    "metadata": {
+      "source": "React documentation",
+      "difficulty": "intermediate",
+      "tools": ["React DevTools", "Lighthouse"]
+    }
+  },
+  {
+    "category": "architecture",
+    "title": "Microservices Design Patterns",
+    "content": "Common microservices patterns:\n\n**Communication Patterns**\n- API Gateway: Single entry point for clients\n- Service Mesh: Infrastructure layer for service communication\n- Event Sourcing: Store events instead of current state\n- CQRS: Separate read and write models\n\n**Data Patterns**\n- Database per Service: Each service owns its data\n- Saga Pattern: Manage distributed transactions\n- Event-Driven Architecture: Loose coupling via events\n\n**Resilience Patterns**\n- Circuit Breaker: Prevent cascading failures\n- Bulkhead: Isolate critical resources\n- Timeout: Set reasonable time limits\n- Retry: Handle transient failures",
+    "tags": ["microservices", "architecture", "patterns", "distributed-systems"],
+    "metadata": {
+      "source": "Microservices patterns book",
+      "difficulty": "advanced",
+      "concepts": ["scalability", "resilience", "maintainability"]
+    }
+  },
+  {
+    "category": "cloud",
+    "title": "AWS Cost Optimization",
+    "content": "AWS cost optimization strategies:\n\n**Compute Optimization**\n- Right-size EC2 instances\n- Use Spot Instances for fault-tolerant workloads\n- Implement Auto Scaling\n- Consider Graviton processors\n\n**Storage Optimization**\n- Use appropriate S3 storage classes\n- Implement lifecycle policies\n- Delete unused EBS volumes\n- Use EFS Intelligent Tiering\n\n**Monitoring & Governance**\n- Set up billing alerts\n- Use AWS Cost Explorer\n- Implement resource tagging\n- Regular cost reviews\n\n**Reserved Capacity**\n- Purchase Reserved Instances for predictable workloads\n- Use Savings Plans for flexible commitments",
+    "tags": ["aws", "cloud", "cost-optimization", "finops"],
+    "metadata": {
+      "source": "AWS Well-Architected Framework",
+      "difficulty": "intermediate",
+      "tools": ["Cost Explorer", "Trusted Advisor"]
+    }
+  },
+  {
+    "category": "testing",
+    "title": "Test-Driven Development (TDD)",
+    "content": "TDD cycle and best practices:\n\n**The Red-Green-Refactor Cycle**\n1. **Red**: Write a failing test\n2. **Green**: Write minimal code to pass\n3. **Refactor**: Improve code while keeping tests green\n\n**Best Practices**\n- Write tests first, code second\n- Keep tests simple and focused\n- Test behavior, not implementation\n- Use descriptive test names\n- Maintain fast test execution\n- Aim for high test coverage\n\n**Benefits**\n- Better code design\n- Reduced debugging time\n- Confidence in refactoring\n- Living documentation\n- Fewer production bugs",
+    "tags": ["testing", "tdd", "development", "best-practices"],
+    "metadata": {
+      "source": "Test-Driven Development by Kent Beck",
+      "difficulty": "intermediate",
+      "frameworks": ["Jest", "JUnit", "pytest"]
+    }
+  },
+  {
+    "category": "productivity",
+    "title": "Git Workflow Best Practices",
+    "content": "Effective Git workflows and practices:\n\n**Branch Strategy**\n- Use feature branches for new development\n- Keep main/master branch stable\n- Use descriptive branch names\n- Delete merged branches\n\n**Commit Practices**\n- Write clear, descriptive commit messages\n- Make atomic commits (one logical change)\n- Use conventional commit format\n- Commit frequently, push regularly\n\n**Code Review**\n- Create pull requests for all changes\n- Review code thoroughly\n- Use automated checks (CI/CD)\n- Address feedback promptly\n\n**Useful Commands**\n- git rebase -i for cleaning history\n- git bisect for finding bugs\n- git stash for temporary changes\n- git cherry-pick for selective merging",
+    "tags": ["git", "version-control", "workflow", "collaboration"],
+    "metadata": {
+      "source": "Git documentation and best practices",
+      "difficulty": "beginner",
+      "tools": ["GitHub", "GitLab", "Bitbucket"]
+    }
+  }
+]
