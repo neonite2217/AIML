@@ -47,12 +47,12 @@ ClaudeOPS bridges the gap between AI assistance and system administration by pro
 
 **Linux/macOS:**
 ```bash
-curl -sSL https://raw.githubusercontent.com/yourusername/claude-ops-mcp/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/neonite2217/AIML/main/MCP_Frameworks/ClaudeOPS/install.sh | bash
 ```
 
 **Windows (PowerShell as Administrator):**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/yourusername/claude-ops-mcp/main/install.ps1 | iex
+iwr -useb iwr -useb https://raw.githubusercontent.com/neonite2217/AIML/main/MCP_Frameworks/ClaudeOPS/install.ps1 | iex
 ```
 
 The installer automatically:
@@ -71,7 +71,7 @@ If you prefer step-by-step setup:
 mkdir claudeops && cd claudeops
 
 # 2. Download installer script
-curl -O https://raw.githubusercontent.com/yourusername/claude-ops-mcp/main/Claudeops_MCP-server.sh
+curl -O curl -sSL https://raw.githubusercontent.com/neonite2217/AIML/main/MCP_Frameworks/ClaudeOPS/install.sh
 chmod +x Claudeops_MCP-server.sh
 
 # 3. Run installer
