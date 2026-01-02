@@ -1,0 +1,17 @@
+*.gguf
+*.bin
+*.pt
+*.pth
+*.safetensors
+*.so
+*.so.*
+*.a
+venv/
+.venv/
+target/
+libtorch/
+libtorch.zip
+__pycache__/
+*.pyc
+node_modules/
+.git_bak/
