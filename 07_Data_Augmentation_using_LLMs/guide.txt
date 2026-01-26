@@ -1,0 +1,52 @@
+## 11. Data Augmentation using LLMs (Python)
+
+### Description
+LLM-based augmentation expands small datasets by generating new structured samples following patterns (including CSV-like rows). This project teaches you how to leverage the generative power of a model like GPT-2 to create new training examples, which can improve the robustness and performance of downstream machine learning models, especially when data is scarce.
+
+### Prerequisites
+Prompting basics, data validation, Pandas parsing/cleaning.
+
+### Resources
+GPT-2 text generation model; example “Employee Salary Dataset” style prompt with columns and sample rows.
+
+### Project Workflow
+The workflow begins with loading a pre-trained text generation model, such as GPT-2, from the Hugging Face library. The key to this project is "in-context learning," where you will craft a high-quality prompt that shows the model exactly what you want it to do. You will build a structured prompt that includes a description of the task, the desired column headers, and several high-quality example rows.
+
+Once the prompt is ready, you will feed it to the model and generate a block of synthetic text. This text will contain new, generated rows that follow the pattern of your examples. The next critical step is to parse this generated text. You will need to write code to clean up the model's output and load it into a Pandas DataFrame.
+
+Finally, you must validate the generated data to ensure its quality. This involves checking if the data conforms to the expected schema (correct data types), removing duplicates, and ensuring that the values fall within a reasonable range.
+
+### Lab steps
+1. Load a text generation model (e.g., GPT-2).
+2. Build a structured prompt with headers + example rows.
+3. Generate synthetic rows of text.
+4. Parse generated content into a DataFrame.
+5. Validate: schema checks, duplicates, numeric ranges, sanity constraints.
+
+### Build and Run (Updated)
+Use these steps to rebuild this project from scratch:
+
+```bash
+cd 07_Data_Augmentation_using_LLMs
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+python data_augmentation.py
+```
+
+Expected run behavior:
+- Prints all five workflow stages
+- Parses generated data into pandas DataFrame
+- Applies validation filters and prints final statistics
+
+For a fuller operational guide, see `BUILD_FROM_SCRATCH.md` and `README.md`.
+
+---
+
+### How you may enhance this project
+- **Enforce Structured Data Generation:** Generating free-form text and parsing it can be brittle. A great enhancement is to force the LLM to generate structured data directly. You can use newer models that have a built-in JSON mode. Alternatively, you can use a library like `guidance` or `outlines` that uses advanced techniques to constrain the LLM's output to a specific format, ensuring valid JSON or CSV every time.
+- **Controllable Generation with Advanced Prompting:** Go beyond simple generation by using more advanced prompting to control the properties of the synthetic data. For a classification task, you could explicitly ask the model to generate examples for an under-represented class. For text generation, you could specify the desired sentiment, tone, or reading level of the output.
+- **Automated Data Quality Filtering:** Implement a more robust filtering step for the generated data. This could involve using statistical methods to detect and remove outliers that don't conform to the distribution of the original data. For a more advanced approach, you could even train a separate classification model to distinguish between high-quality and low-quality synthetic samples.
+- **Empirical Comparison with Traditional Augmentation:** To demonstrate the value of your approach, compare it empirically to traditional data augmentation techniques. For a text dataset, this could be back-translation or synonym replacement. Train a downstream model (e.g., a text classifier) on a dataset augmented with your LLM-based method and another on a dataset augmented with a traditional method, and compare their performance.
+- **Augmenting Tabular Data with Relationships:** Augmenting tabular data is a major challenge because you need to preserve the relationships between columns. Adapt your technique for this. This might involve using a specialized model designed for tabular data, or developing a sophisticated prompting strategy where you generate one column conditioned on the values of the others to maintain logical consistency.
