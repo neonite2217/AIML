@@ -1,0 +1,18 @@
+{
+  "imputation": {
+    "numeric_strategy": "mean",
+    "categorical_strategy": "most_frequent"
+  },
+  "outlier_detection": {
+    "method": "iqr",
+    "iqr_multiplier": 1.5,
+    "replacement": "mean"
+  },
+  "scaling": {
+    "method": "standard",
+    "apply_to": "numeric"
+  },
+  "columns": {
+    "exclude": []
+  }
+}

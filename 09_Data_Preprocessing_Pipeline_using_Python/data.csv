@@ -1,0 +1,7 @@
+numeric_1,numeric_2,categorical_1,categorical_2
+1,1.1,A,X
+2,2.2,B,Y
+,3.3,A,X
+4,4.4,C,Z
+5,5.5,,Y
+100,-20.0,B,Z

@@ -1,0 +1,1 @@
+Read guide.txt and data_preprocessing_pipeline.py. Complete the preprocessing pipeline for data.csv using the config in config.json. Setup venv, install requirements.txt. Run it and produce output. Write BUILD_LOG.md.

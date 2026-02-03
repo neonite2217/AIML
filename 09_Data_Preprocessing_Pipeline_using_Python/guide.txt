@@ -1,0 +1,54 @@
+# University of Gemini - Department of Computer Science
+# Advanced Topics in AI and Data Science - Lab Project Handbook
+
+## Introduction
+
+This handbook provides a series of advanced, hands-on lab projects designed to complement the theoretical coursework in advanced AI and data science. The projects are curated to expose students to a breadth of technologies and techniques, from statistical analysis in R to high-performance computing in C++ and Rust, and cutting-edge AI model development in Python.
+
+Each project is designed to be a self-contained learning module. Students are expected to have the prerequisite knowledge listed for each project. The lab steps provide a clear, step-by-step guide to completing the project.
+
+## Language and Technology Distribution Strategy
+
+The projects in this handbook are distributed across several programming languages to reflect the diverse ecosystem of tools used in modern data science and AI. The distribution is as follows:
+
+*   **Python (~60%):**  For advanced AI, deep learning, machine learning operations (MLOps), and large language models (LLMs).
+*   **R (~15%):** For statistical modeling, data visualization, and exploratory data analysis.
+*   **C++ (~15%):** For performance-critical applications, simulations, and implementing algorithms from scratch.
+*   **Rust (~10%):** For systems-level programming, data pipelines, and high-performance tooling.
+
+---
+
+---
+
+## 2. Data Preprocessing Pipeline using Python
+
+### Description
+A preprocessing pipeline is a repeatable workflow that cleans raw data and standardizes transformations (missing values, outliers, scaling, categorical handling) so your analysis/modeling is consistent. This project is fundamental to any machine learning task, as it ensures the quality and consistency of the data fed into your models.
+
+### Prerequisites
+Python, Pandas/NumPy, feature types (numeric vs categorical), IQR/outliers, standard scaling.
+
+### Resources
+`data.csv` sample mixed-type dataset used for testing.
+
+### Project Workflow
+The project begins with loading a raw dataset using Pandas and performing an initial analysis to understand its structure, identify feature types (numeric vs. categorical), and detect initial quality issues like missing values. Your first task is to segregate the columns by their data type.
+
+Next, you will implement a series of cleaning and transformation functions. For numerical columns, you will impute missing values using the mean and handle outliers by replacing them with a calculated boundary value. Subsequently, you will normalize these columns using `StandardScaler` from scikit-learn. For categorical columns, you will impute missing values using the mode. Finally, you will wrap these steps into a single, reusable function or class that takes raw data as input and returns a cleaned, analysis-ready DataFrame, verifying the transformations by comparing the data before and after.
+
+### Lab steps
+1. Identify numeric and categorical columns.
+2. Fill numeric missing values with mean.
+3. Detect outliers using IQR bounds; replace outliers with mean.
+4. Normalize numeric columns with `StandardScaler`.
+5. Fill categorical missing values with mode.
+6. Return cleaned dataset and verify before/after.
+
+---
+
+### How you may enhance this project
+- **Advanced Imputation Strategies:** Mean/mode imputation is simple but can distort the data's natural variance. Enhance your pipeline by implementing more sophisticated techniques. For numerical data, use K-Nearest Neighbors (KNN) imputation, which considers the values of nearby data points, or multivariate imputation by chained equations (MICE), which models each feature with missing values as a function of other features. For categorical data, explore creating a special "missing" category.
+- **Full Scikit-learn Pipeline Integration:** Refactor the pipeline to use `sklearn.pipeline.Pipeline` and `ColumnTransformer`. This is the industry-standard way to build robust, reusable, and deployable preprocessing objects in Python. It allows you to encapsulate all your logic into a single object that can be easily saved, versioned, and integrated into a larger model training workflow.
+- **Configuration-Driven Workflow:** To make your pipeline highly flexible, abstract the cleaning steps into a configuration file (e.g., YAML or JSON). This file would define which operations (e.g., imputation method, scaling type, outlier handling strategy) to apply to which columns. Your Python script would then parse this file to dynamically build and execute the pipeline, making it adaptable to new datasets without changing the code.
+- **Automated Data Quality Reporting:** Generate a comprehensive data quality report before and after preprocessing. This report should visualize the changes in data distributions, missing value counts, and outlier numbers. Libraries like `pandas-profiling` or `sweetviz` can automate this process and produce detailed HTML reports, which are excellent for demonstrating the impact of your cleaning process.
+- **Robust CLI with Argument Parsing:** Convert the script into a professional command-line interface (CLI) using Python's `argparse` or a more modern library like `Typer`. The CLI should accept arguments for the input file path, output file path, and the path to a configuration file. This turns your script into a reusable tool for any project.
