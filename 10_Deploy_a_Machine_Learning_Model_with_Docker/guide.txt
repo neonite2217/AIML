@@ -1,0 +1,52 @@
+## 24. Deploy a Machine Learning Model with Docker (Python)
+
+### Description
+This project covers the crucial MLOps skill of deploying a machine learning model as a robust and portable service. You will take a trained scikit-learn model, wrap it in a FastAPI web API, and then containerize the entire application using Docker. This ensures that your model can be run consistently in any environment, from your local machine to a cloud server.
+
+### Prerequisites
+Model training/export, REST API basics, FastAPI, Docker fundamentals.
+
+### Resources
+California Housing dataset; GradientBoostingRegressor; saved `.pkl` model; FastAPI app.
+
+### Project Workflow
+The project starts with a pre-trained model. You will first train a scikit-learn model (like a GradientBoostingRegressor on the California Housing dataset) and save the trained model artifact to a file using `pickle`.
+
+Next, you will build a web API around this model using FastAPI. You will create a `/predict` endpoint that loads the saved model, accepts input data in the request body, and returns the model's prediction in the response.
+
+The final and most important step is to containerize this application. You will write a `Dockerfile` that defines all the steps needed to create a runnable image. This includes specifying a base Python image, copying your code and model artifact, installing the Python dependencies from `requirements.txt`, and specifying the command to run the Uvicorn server. You will then build this Docker image and run it as a container, testing your API via the automatically generated Swagger UI.
+
+### Lab steps
+1. Train model and save as pickle file.
+2. Build FastAPI `/predict` endpoint to load model and return predictions.
+3. Create `requirements.txt`.
+4. Write Dockerfile (copy code, install deps, run uvicorn).
+5. Build image and run container.
+6. Test using `/docs` Swagger UI.
+
+### Build and Run (Updated)
+```bash
+cd 10_Deploy_a_Machine_Learning_Model_with_Docker
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+Container path:
+```bash
+docker build -t housing-predictor:local .
+docker run --rm -p 8000:8000 housing-predictor:local
+```
+
+If `docker build` fails due socket permissions, verify access to `/var/run/docker.sock`.
+
+---
+
+### How you may enhance this project
+- **Automate Deployment with CI/CD:** A key MLOps practice is to automate deployment. Create a CI/CD pipeline using a tool like GitHub Actions. This pipeline should automatically run tests on your API code, build the Docker image, and then push it to a container registry (like Docker Hub or AWS ECR) whenever you push changes to your repository. This demonstrates a professional end-to-end workflow.
+- **Implement Batch Prediction for Efficiency:** A `/predict` endpoint that handles one prediction at a time is good for demos, but inefficient for production. Add a new `/predict_batch` endpoint that can accept a list of data points in a single request and return a list of predictions. This is much more efficient as it reduces network overhead and allows the model to leverage vectorized operations.
+- **Add Production-Grade Model Monitoring:** How do you know if your model is still performing well after deployment? Add a monitoring component. You could log all the incoming prediction requests and the model's outputs to a database or a logging service. Then, you can build a dashboard to track the distribution of the input data and the model's predictions over time, which can help you detect data drift or concept drift.
+- **Set Up A/B Testing Infrastructure:** If you want to try out a new model, how do you know if it's better than the current one? Set up a framework for A/B testing. This could involve deploying two versions of your model (the "A" and "B" models) and using a proxy or an API gateway to route a certain percentage of the traffic to each model. You can then compare their performance in a live production environment.
+- **Optimize for GPU Inference:** If you are deploying a deep learning model, you will want to use a GPU for inference to get the best performance. Modify your `Dockerfile` to use a GPU-enabled base image (e.g., from NVIDIA's NGC catalog), and ensure that your application code is configured to run the model on the GPU. This is a critical skill for deploying large models.

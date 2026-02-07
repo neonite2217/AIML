@@ -1,0 +1,1 @@
+Read guide.txt and main.py + Dockerfile. Build the Docker ML model deployment. Run docker build and docker run locally. Write BUILD_LOG.md documenting the Docker setup and how to call the API.
