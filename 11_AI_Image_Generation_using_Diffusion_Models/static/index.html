@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Generate stunning AI images from text prompts using Stable Diffusion. A modern web interface for diffusion-based image generation." />
+  <title>Diffusion Image Generator</title>
+  <link rel="stylesheet" href="/static/style.css?v=20260308b" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>" />
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- ─── Header ──────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="logo">✦</div>
+      <h1>Diffusion Image Generator</h1>
+    </div>
+    <div class="device-badge" id="device-badge">
+      <span class="dot"></span>
+      <span id="device-label">Detecting device…</span>
+    </div>
+  </header>
+
+  <!-- ─── Main: form + result ─────────────────────────────────── -->
+  <div class="main-grid">
+
+    <!-- Left: Generation form -->
+    <div class="card" id="form-card">
+      <div class="card-title"><span class="icon">🎨</span> Create Image</div>
+
+      <form id="gen-form" autocomplete="off">
+        <div class="form-group">
+          <label for="prompt">Prompt</label>
+          <textarea id="prompt" placeholder="Describe the image you want to create…&#10;e.g. &quot;a cat wearing a wizard hat, photorealistic, 4k&quot;" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="negative">Negative Prompt <span style="color:var(--text-muted)">(optional)</span></label>
+          <textarea id="negative" class="small" placeholder="What to avoid… e.g. &quot;blurry, cartoon, low quality&quot;"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="model">Model</label>
+          <select id="model">
+            <option value="runwayml/stable-diffusion-v1-5">Loading models…</option>
+          </select>
+
+          <!-- Model download controls -->
+          <div class="model-download-row" id="model-download-row">
+            <button type="button" class="btn-download-model" id="btn-download-model">
+              <span class="dl-icon">⬇</span> Download Model
+            </button>
+            <button type="button" class="btn-cancel-download" id="btn-cancel-download" style="display:none;">
+              Cancel
+            </button>
+            <span class="model-status-badge" id="model-status-badge"></span>
+          </div>
+
+          <!-- Download progress bar -->
+          <div class="download-progress-container" id="download-progress-container" style="display:none;">
+            <div class="download-progress-bar">
+              <div class="download-progress-fill" id="download-progress-fill"></div>
+            </div>
+            <span class="download-progress-text" id="download-progress-text">0%</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Guidance Scale</label>
+          <div class="slider-row">
+            <input type="range" id="guidance" min="1" max="20" step="0.5" value="7.5" />
+            <span class="slider-value" id="guidance-val">7.5</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Inference Steps</label>
+          <div class="slider-row">
+            <input type="range" id="steps" min="10" max="150" step="1" value="50" />
+            <span class="slider-value" id="steps-val">50</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-generate" id="btn-generate">
+          ✦ Generate Image
+        </button>
+        <button type="button" class="btn-cancel" id="btn-cancel" style="display:none;">
+          ✕ Cancel Generation
+        </button>
+      </form>
+    </div>
+
+    <!-- Right: Result -->
+    <div class="card">
+      <div class="card-title"><span class="icon">🖼️</span> Result</div>
+      <div class="result-area" id="result-area">
+
+        <!-- Placeholder (visible initially) -->
+        <div class="result-placeholder" id="result-placeholder">
+          <div class="big-icon">✦</div>
+          <p>Your generated image will appear here.<br/>Enter a prompt and click <strong>Generate</strong>.</p>
+        </div>
+
+        <!-- Spinner (shown during generation) -->
+        <div class="spinner-overlay" id="spinner">
+          <div class="spinner"></div>
+          <div class="spinner-text">
+            Generating your image…
+            <span>This may take a few seconds on GPU, or minutes on CPU.</span>
+          </div>
+        </div>
+
+        <!-- Result (shown after generation) -->
+        <div class="result-image-wrapper" id="result-wrapper" style="display:none;">
+          <img id="result-img" src="" alt="Generated image" />
+          <div class="result-meta">
+            <span class="time" id="result-time">⏱ —</span>
+            <div class="result-actions">
+              <a class="btn-download" id="result-download" href="#" download>⬇ Save Image</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Generated ───────────────────────────────────────────── -->
+  <section class="gallery-section">
+    <div class="section-header">
+      <h2 class="section-title"><span>✦</span> Generated</h2>
+      <span class="section-hint" id="generated-hint">Unsaved images are cleared on server restart — click ⬇ to keep</span>
+    </div>
+    <div class="gallery-grid" id="gallery-grid">
+      <div class="gallery-empty">No images yet. Generate your first one above!</div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ──────────────────────────────────────────────── -->
+  <footer class="footer">
+    Diffusion Image Generator — Powered by Stable Diffusion &amp; Flask
+  </footer>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <img id="lightbox-img" src="" alt="Full-size image" />
+  <a class="lightbox-download-btn" id="lightbox-download" href="#" download>⬇ Save Image</a>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="/static/app.js?v=20260308b"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Environments
+venv/
+env/
+.env
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Project specific caches and outputs
+.project_data/
+generated/
+v1_backup/
+*.log
