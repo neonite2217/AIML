@@ -1,0 +1,16 @@
+/var/home/ansh/Projects/super_30/12_Document_Analysis_using_LLMs/venv/lib/python3.12/site-packages/torch/cuda/__init__.py:184: UserWarning: CUDA initialization: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 304: OS call failed or operation not supported on this OS (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+  return torch._C._cuda_getDeviceCount() > 0
+/var/home/ansh/Projects/super_30/12_Document_Analysis_using_LLMs/venv/lib/python3.12/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 13] Permission denied.  joblib will operate in serial mode
+  warnings.warn("%s.  joblib will operate in serial mode" % (e,))
+2026-03-17 12:36:22,650 - INFO - No GPU detected. Using CPU with standard chunking
+2026-03-17 12:36:22,853 - INFO - Initialized ChromaDB at ./chroma_db
+2026-03-17 12:36:22,853 - INFO - Initializing Generator with model: google/flan-t5-large on cpu
+
+=== System Information ===
+Loading weights:   0%|          | 0/558 [00:00<?, ?it/s]Loading weights: 100%|██████████| 558/558 [00:00<00:00, 8349.40it/s]
+The tied weights mapping and config for this model specifies to tie shared.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+Device: cpu
+ChromaDB Available: True
+Strategy: Standard Recursive
+Chunk Size: 512
+Overlap: 100

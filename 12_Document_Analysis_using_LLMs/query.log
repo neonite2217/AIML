@@ -1,0 +1,79 @@
+/var/home/ansh/Projects/super_30/12_Document_Analysis_using_LLMs/venv/lib/python3.12/site-packages/torch/cuda/__init__.py:184: UserWarning: CUDA initialization: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 304: OS call failed or operation not supported on this OS (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+  return torch._C._cuda_getDeviceCount() > 0
+/var/home/ansh/Projects/super_30/12_Document_Analysis_using_LLMs/venv/lib/python3.12/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 13] Permission denied.  joblib will operate in serial mode
+  warnings.warn("%s.  joblib will operate in serial mode" % (e,))
+2026-03-17 12:34:58,604 - INFO - No GPU detected. Using CPU with standard chunking
+2026-03-17 12:34:58,682 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2026-03-17 12:34:58,823 - INFO - Initialized ChromaDB at ./chroma_db
+2026-03-17 12:34:58,823 - INFO - Initializing Generator with model: google/flan-t5-large on cpu
+2026-03-17 12:34:59,302 - WARNING - Retrying (Retry(total=1, connect=1, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:34:59,324 - WARNING - Retrying (Retry(total=0, connect=0, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+
+=== Processing and Querying Document ===
+File: sample_document.pdf
+Question: What is the agreement about?
+Loading weights:   0%|          | 0/558 [00:00<?, ?it/s]2026-03-17 12:34:59,415 - INFO - Backing off send_request(...) for 0.8s (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")))
+Loading weights: 100%|██████████| 558/558 [00:00<00:00, 5824.96it/s]
+The tied weights mapping and config for this model specifies to tie shared.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+2026-03-17 12:34:59,546 - INFO - === Processing document: sample_document.pdf ===
+2026-03-17 12:34:59,546 - INFO - Extracting text from: sample_document.pdf
+2026-03-17 12:34:59,553 - INFO - Extracted 987 characters
+2026-03-17 12:34:59,554 - INFO - Creating standard chunks...
+2026-03-17 12:34:59,554 - INFO - Created 2 chunks
+2026-03-17 12:34:59,573 - INFO - Vector store cleared
+2026-03-17 12:34:59,573 - INFO - Adding 2 chunks to vector store...
+2026-03-17 12:34:59,919 - INFO - Chunks added successfully
+2026-03-17 12:35:00,264 - WARNING - Retrying (Retry(total=1, connect=1, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:00,265 - WARNING - Retrying (Retry(total=0, connect=0, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:00,267 - INFO - Backing off send_request(...) for 0.5s (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")))
+2026-03-17 12:35:00,770 - WARNING - Retrying (Retry(total=1, connect=1, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:00,770 - WARNING - Retrying (Retry(total=0, connect=0, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:00,772 - INFO - Backing off send_request(...) for 0.9s (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")))
+2026-03-17 12:35:01,679 - WARNING - Retrying (Retry(total=1, connect=1, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:01,679 - WARNING - Retrying (Retry(total=0, connect=0, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:01,682 - ERROR - Giving up send_request(...) after 4 tries (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")))
+2026-03-17 12:35:02,184 - WARNING - Retrying (Retry(total=1, connect=1, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:02,185 - WARNING - Retrying (Retry(total=0, connect=0, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:02,187 - INFO - Backing off send_request(...) for 0.8s (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")))
+2026-03-17 12:35:02,953 - WARNING - Retrying (Retry(total=1, connect=1, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:02,954 - WARNING - Retrying (Retry(total=0, connect=0, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:02,956 - INFO - Backing off send_request(...) for 0.6s (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")))
+
+Processing document...
+✓ Processed 2 chunks using CPU
+
+Querying...
+
+=== Query Results ===
+Question: What is the agreement about?
+Retrieved 2 relevant chunks
+
+Context:
+--------------------------------------------------------------------------------
+This Employment Agreement is established on 22 Jan 2024 between TechNova Solutions and the Use
+1. COMPENSATION
+This section details the specific requirements and obligations regarding compensation.
+The parties agree to abide by all clauses mentioned in the compensation documentation.
+2. CONFIDENTIALITY
+This section details the specific requirements and obligations regarding confidentiality.
+The parties agree to abide by all clauses mentioned in the confidentiality documentation.
+3. TERM
+---
+y.
+The parties agree to abide by all clauses mentioned in the confidentiality documentation.
+3. TERMThis section details the specific requirements and obligations regarding term.
+The parties agree to abide by all clauses mentioned in the term documentation.
+4. BENEFITS
+This section details the specific requirements and obligations regarding benefits.
+The parties agree to abide by all clauses mentioned in the benefits documentation.
+5. CONTACT INFORMATION
+For questions, contact TechNova Solutions at: support@technovasolutions.com
+Office Location: 123 Business Way, Silicon Valley, CA 94025
+
+--------------------------------------------------------------------------------
+2026-03-17 12:35:03,558 - WARNING - Retrying (Retry(total=1, connect=1, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:03,559 - WARNING - Retrying (Retry(total=0, connect=0, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:03,561 - INFO - Backing off send_request(...) for 2.0s (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")))
+2026-03-17 12:35:05,545 - WARNING - Retrying (Retry(total=1, connect=1, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:05,545 - WARNING - Retrying (Retry(total=0, connect=0, read=2, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")': /batch/
+2026-03-17 12:35:05,547 - ERROR - Giving up send_request(...) after 4 tries (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NameResolutionError("HTTPSConnection(host='us.i.posthog.com', port=443): Failed to resolve 'us.i.posthog.com' ([Errno -2] Name or service not known)")))
