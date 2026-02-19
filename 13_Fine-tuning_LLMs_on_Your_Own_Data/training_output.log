@@ -1,0 +1,96 @@
+============================================================
+Fine-tuning LLMs with PEFT/LoRA
+============================================================
+Model: distilbert-base-uncased
+Dataset: imdb
+Device: CUDA
+Train samples: 200 | Test samples: 50 | Epochs: 1
+============================================================
+
+[1/6] Loading IMDb dataset...
+  Source: IMDb (Hugging Face)
+  Training samples: 200
+  Test samples: 50
+
+[2/6] Loading tokenizer...
+  Tokenizing training data...
+Map:   0%|          | 0/200 [00:00<?, ? examples/s]Map: 100%|██████████| 200/200 [00:00<00:00, 3424.94 examples/s]
+  Tokenizing test data...
+Map:   0%|          | 0/50 [00:00<?, ? examples/s]Map: 100%|██████████| 50/50 [00:00<00:00, 2880.39 examples/s]
+
+[3/6] Loading pretrained model...
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 7189.04it/s]
+[1mDistilBertForSequenceClassification LOAD REPORT[0m from: distilbert-base-uncased
+Key                     | Status     | 
+------------------------+------------+-
+vocab_layer_norm.bias   | UNEXPECTED | 
+vocab_projector.bias    | UNEXPECTED | 
+vocab_layer_norm.weight | UNEXPECTED | 
+vocab_transform.weight  | UNEXPECTED | 
+vocab_transform.bias    | UNEXPECTED | 
+pre_classifier.weight   | MISSING    | 
+classifier.bias         | MISSING    | 
+pre_classifier.bias     | MISSING    | 
+classifier.weight       | MISSING    | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING[3m	:those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.[0m
+`logging_dir` is deprecated and will be removed in v5.2. Please set `TENSORBOARD_LOGGING_DIR` instead.
+  Source: local pretrained checkpoint
+
+[4/6] Configuring LoRA (PEFT)...
+trainable params: 739,586 || all params: 67,694,596 || trainable%: 1.0925
+
+[5/6] Configuring training...
+
+[6/6] Starting training...
+============================================================
+  0%|          | 0/50 [00:00<?, ?it/s]  2%|▏         | 1/50 [00:00<00:30,  1.58it/s] 12%|█▏        | 6/50 [00:00<00:04, 10.13it/s] 22%|██▏       | 11/50 [00:00<00:02, 17.55it/s] 32%|███▏      | 16/50 [00:00<00:01, 23.76it/s] 40%|████      | 20/50 [00:01<00:01, 27.43it/s] 50%|█████     | 25/50 [00:01<00:00, 32.03it/s]                                                50%|█████     | 25/50 [00:01<00:00, 32.03it/s] 60%|██████    | 30/50 [00:01<00:00, 34.03it/s] 70%|███████   | 35/50 [00:01<00:00, 35.66it/s] 80%|████████  | 40/50 [00:01<00:00, 37.88it/s] 90%|█████████ | 45/50 [00:01<00:00, 40.12it/s]100%|██████████| 50/50 [00:01<00:00, 42.03it/s]                                               100%|██████████| 50/50 [00:01<00:00, 42.03it/s]{'loss': '0.686', 'grad_norm': '2.073', 'learning_rate': '0.000104', 'epoch': '0.5'}
+{'loss': '0.6815', 'grad_norm': '3.513', 'learning_rate': '4e-06', 'epoch': '1'}
+
+  0%|          | 0/13 [00:00<?, ?it/s][A
+ 92%|█████████▏| 12/13 [00:00<00:00, 109.88it/s][A                                               
+                                                [A100%|██████████| 50/50 [00:01<00:00, 42.03it/s]
+100%|██████████| 13/13 [00:00<00:00, 109.88it/s][A
+                                                [A                                               100%|██████████| 50/50 [00:02<00:00, 42.03it/s]100%|██████████| 50/50 [00:02<00:00, 19.53it/s]
+{'eval_loss': '0.6425', 'eval_accuracy': '0.58', 'eval_precision': '1', 'eval_recall': '0.04545', 'eval_f1': '0.08696', 'eval_runtime': '0.1324', 'eval_samples_per_second': '377.7', 'eval_steps_per_second': '98.2', 'epoch': '1'}
+{'train_runtime': '2.557', 'train_samples_per_second': '78.22', 'train_steps_per_second': '19.55', 'train_loss': '0.6837', 'epoch': '1'}
+
+============================================================
+Evaluating model...
+============================================================
+  0%|          | 0/13 [00:00<?, ?it/s] 92%|█████████▏| 12/13 [00:00<00:00, 114.46it/s]100%|██████████| 13/13 [00:00<00:00, 113.29it/s]
+
+Evaluation Results:
+  eval_loss: 0.6425
+  eval_accuracy: 0.5800
+  eval_precision: 1.0000
+  eval_recall: 0.0455
+  eval_f1: 0.0870
+  eval_runtime: 0.1271
+  eval_samples_per_second: 393.2460
+  eval_steps_per_second: 102.2440
+  epoch: 1.0000
+
+============================================================
+Saving model...
+============================================================
+Model saved to: ./lora-imdb-model
+
+============================================================
+Testing inference on sample reviews...
+============================================================
+
+Review: This movie was absolutely fantastic! The acting was superb.
+Prediction: POSITIVE (confidence: 51.85%)
+
+Review: Terrible waste of time. The plot made no sense at all.
+Prediction: NEGATIVE (confidence: 56.38%)
+
+Review: An average film, nothing special but not bad either.
+Prediction: NEGATIVE (confidence: 55.99%)
+
+============================================================
+All tasks completed successfully!
+============================================================

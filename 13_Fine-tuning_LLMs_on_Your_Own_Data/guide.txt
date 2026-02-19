@@ -1,0 +1,49 @@
+## 17. Fine-tuning LLMs on Your Own Data (Python)
+
+### Description
+Fine-tuning adapts a large, pre-trained model (like BERT or GPT) to a specific task or domain, significantly improving its performance. This project will guide you through the process of fine-tuning a model on a custom dataset using the Hugging Face `transformers` and `datasets` libraries. You will use the high-level `Trainer` API, which handles the complexities of the training loop for you.
+
+### Prerequisites
+Transformers training basics, tokenization, GPU familiarity (optional), evaluation metrics.
+
+### Resources
+AG News subset dataset; pretrained classifier model (e.g., bert-base-uncased).
+
+### Project Workflow
+The project starts with loading a dataset, in this case, the AG News subset, and splitting it into training and testing sets. You will then load a pre-trained tokenizer from a model of your choice (e.g., `bert-base-uncased`) and use it to tokenize your text data, converting the words into a numerical format that the model can understand.
+
+Next, you will load the pre-trained model itself, configured for the specific task of sequence classification. The core of the project involves using the Hugging Face `Trainer` API. You will configure the training arguments (like learning rate, number of epochs, and batch size) and then pass the model, dataset, and arguments to the `Trainer`.
+
+The `Trainer` will then handle the entire fine-tuning process. After training is complete, you will save the fine-tuned model to disk, ready for deployment or further evaluation.
+
+### Lab steps
+1. Load dataset and split train/test.
+2. Tokenize texts using AutoTokenizer.
+3. Build dataset objects compatible with Trainer.
+4. Load pretrained model for sequence classification.
+5. Configure training args; train and save model.
+
+### Build and Run (Updated)
+```bash
+cd 13_Fine-tuning_LLMs_on_Your_Own_Data
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+./.venv/bin/python fine_tuning.py
+```
+
+Expected outputs:
+- `training_output.log`
+- `lora-imdb-model/adapter_model.safetensors`
+- `lora-imdb-model/adapter_config.json`
+- tokenizer files in `lora-imdb-model/`
+
+---
+
+### How you may enhance this project
+- **Parameter-Efficient Fine-Tuning (PEFT):** Full fine-tuning can be computationally expensive. A great enhancement is to use a PEFT technique like LoRA (Low-Rank Adaptation) or QLoRA. These methods involve freezing most of the pre-trained model's weights and only training a small number of new, "adapter" layers. This dramatically reduces the memory required for training, making it possible to fine-tune larger models on consumer hardware.
+- **Instruction Tuning for Generalization:** Instead of fine-tuning for a single task, you can "instruction-tune" your model. This involves formatting your training data as a series of instructions (e.g., "classify the sentiment of this text: ..."). By training on a variety of such instructions, you can create a model that is better at generalizing to new, unseen tasks, even in a zero-shot setting.
+- **Post-Training Quantization:** Large models can be slow and expensive for inference. After fine-tuning, quantize your model to a lower precision. This involves converting the model's weights from 32-bit floats to 8-bit or even 4-bit integers. This can significantly reduce the model's size and speed up inference, often with only a small drop in performance.
+- **Deploy the Model as a REST API:** To make your fine-tuned model useful, you need to deploy it. A great portfolio project is to wrap your model in a REST API using a framework like FastAPI. For a more production-oriented approach, use a dedicated model serving tool like the Text Generation Inference (TGI) server from Hugging Face, which is highly optimized for transformer models.
+- **Advanced: Reinforcement Learning from Human Feedback (RLHF):** For a very advanced and impressive project, explore the next step after fine-tuning: alignment. This involves using Reinforcement Learning from Human Feedback (RLHF) or Direct Preference Optimization (DPO) to further align the model's outputs with human preferences. This is how models like ChatGPT are trained to be helpful and harmless.

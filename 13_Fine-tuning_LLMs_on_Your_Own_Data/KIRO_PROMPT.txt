@@ -1,0 +1,1 @@
+Read guide.txt and fine_tuning.py. Implement LLM fine-tuning using HuggingFace PEFT/LoRA on a small free dataset (e.g. IMDb). Setup venv, install requirements.txt. Run it. Write BUILD_LOG.md.
