@@ -1,0 +1,9 @@
+lat,lng,cluster_id,distance_to_center,is_outlier,zone,dbscan_cluster
+40.7484,-73.9857,0,0.03096536008145707,False,Downtown/Financial District,-1
+40.758,-73.9855,0,0.08336325256697949,False,Downtown/Financial District,-1
+40.91,-74.15,2,0.18019351517203358,False,Uptown/North Zone,-1
+40.92,-74.14,2,2.5646151868841116e-14,False,Uptown/North Zone,-1
+40.93,-74.13,2,0.18019351517201845,False,Uptown/North Zone,-1
+40.94,-74.12,1,0.18019351517203358,False,Uptown/North Zone,-1
+40.95,-74.11,1,2.5646151868841116e-14,False,Uptown/North Zone,-1
+40.96,-74.1,1,0.18019351517201843,False,Uptown/North Zone,-1

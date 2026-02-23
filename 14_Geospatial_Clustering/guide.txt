@@ -1,0 +1,51 @@
+## 13. Geospatial Clustering (R)
+
+### Description
+Geospatial clustering involves grouping latitude and longitude points into zones or regions based on their proximity. This project uses the K-Means algorithm to cluster a set of pickup and drop-off coordinates, which is a common task in logistics and urban planning for defining delivery zones, sales territories, or service areas.
+
+### Prerequisites
+Lat/long concepts, distance measures (geodesic), K-Means, mapping visualization (ggplot2, sf).
+
+### Resources
+`deliverytime.txt` (pickup/drop coordinates).
+
+### Project Workflow
+The project begins with loading the geospatial data from `deliverytime.txt` into an R data frame. The first step is to visualize the raw coordinate points on a map using a library like `ggplot2` with `sf`. This initial plot will give you a sense of the spatial distribution of the data.
+
+The core of the project is applying the K-Means clustering algorithm to the latitude and longitude columns. You will need to choose the number of clusters (k) to create. After running the algorithm, you will analyze the resulting clusters, for example, by calculating the size of each cluster and inspecting for outliers.
+
+Finally, you will enhance your initial visualization by plotting the points again, but this time color-coding them based on their assigned cluster. You will also label these clusters to represent meaningful zones, such as "downtown" or "north quadrant," making the results easy to interpret.
+
+### Lab steps
+1. Load coordinates and compute distances if needed (geodesic).
+2. Visualize points on a map.
+3. Run K-Means clustering on latitude/longitude.
+4. Inspect clusters; remove outliers/out-of-region points.
+5. Label clusters as meaningful zones (e.g., central zone).
+
+### Build and Run (Updated)
+
+```bash
+cd 14_Geospatial_Clustering
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+MPLCONFIGDIR=/tmp/mpl python geospatial_clustering.py
+MPLCONFIGDIR=/tmp/mpl python -m pytest -q
+```
+
+Expected outputs:
+- `clustered_deliveries.csv`
+- `optimized_routes.csv`
+- `interactive_map.html`
+- `plot_1_raw_locations.png` to `plot_4_dbscan_clusters.png`
+
+---
+
+### How you may enhance this project
+- **Density-Based Clustering for Arbitrary Shapes:** K-Means works well for spherical clusters, but geospatial data often has irregular shapes (e.g., following roads or rivers). Compare the results of K-Means with a density-based clustering algorithm like DBSCAN or OPTICS. These algorithms can identify arbitrarily shaped clusters and are also excellent at automatically detecting and isolating outliers.
+- **Interactive Map Visualization:** Instead of a static `ggplot2` map, create a dynamic and interactive map using a library like `leaflet` or `mapview`. This would allow users to zoom in and out, pan across the map, and click on individual data points or clusters to get more detailed information in a pop-up. This is a standard for professional geospatial analysis.
+- **Rich Cluster Profiling:** Go beyond simply identifying the clusters. Profile each cluster to create a rich description of its characteristics. You could calculate metrics like the geographical area of each cluster, the density of points, and, if you have additional data, the average delivery time or demographic information within each zone. This turns a simple clustering result into an actionable business analysis.
+- **Incorporate Real-World Constraints:** Add other real-world features to the clustering algorithm. Instead of just using latitude and longitude, you could incorporate the time of day, day of the week, or even real-time traffic data. This would allow you to create dynamic zones that change based on the current conditions, which is a much more advanced and practical application.
+- **Cluster-Based Route Optimization:** Use the clusters as the basis for a route optimization problem. For example, you could use your clusters to assign a set of deliveries to a specific driver. Then, within each cluster, you can solve the Traveling Salesperson Problem (TSP) to find the optimal route for that driver to visit all their assigned points. This combines clustering with optimization to solve a real-world business problem.

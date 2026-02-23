@@ -1,0 +1,3 @@
+zone,n_deliveries,route_order,total_distance_km
+Downtown/Financial District,2,"[0, 1]",1.07
+Uptown/North Zone,6,"[0, 1, 2, 3, 4, 5]",13.94
