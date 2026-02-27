@@ -1,0 +1,1 @@
+Read guide.txt and hybrid_model.py. Build the Hybrid ML model using apple_stock_data.csv — combine LSTM + traditional ML. Setup venv, install requirements.txt. Run and produce forecast output. Write BUILD_LOG.md.

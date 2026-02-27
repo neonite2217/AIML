@@ -1,0 +1,48 @@
+## 7. Hybrid Machine Learning Models (Python)
+
+### Description
+Hybrid models combine different algorithms to exploit their complementary strengths. This project demonstrates this concept by creating a hybrid model for stock price forecasting. It combines a Long Short-Term Memory (LSTM) network, which is excellent for capturing temporal patterns, with a simpler linear regression model that is good at modeling linear trend and lag structures. The predictions from both are then combined in an ensemble.
+
+### Prerequisites
+Time series framing, scaling, deep learning basics (LSTM), regression basics, model evaluation.
+
+### Resources
+`apple_stock_data.csv` (Apple stock time series).
+
+### Project Workflow
+The project starts with data preparation. You will load the Apple stock data, parse the dates, and ensure the data is sorted chronologically. You will then scale the features (like price and volume) to a common range, which is crucial for the performance of the LSTM model.
+
+Next, you will build and train the two separate models. For the LSTM, you will need to transform the data into sequences (e.g., using a 60-day window to predict the next day). For the linear regression model, you will create a different set of features, specifically lag features (e.g., the price from the previous 3 days).
+
+Once both models are trained, you will use them to make predictions on a test set. The final and most important step is to combine these predictions. You will start with a simple weighted average ensemble and evaluate its performance, demonstrating how the hybrid model can outperform the individual models.
+
+### Lab steps
+1. Prepare data: parse dates, sort by time, scale features.
+2. Build sequences (e.g., 60-day window) for LSTM.
+3. Train LSTM to predict future value(s).
+4. Build lag features for linear regression (e.g., past 3 days).
+5. Train linear regression on lag features.
+6. Combine predictions (weighted average ensemble).
+
+### Build and Run (Updated)
+```bash
+cd 15_Hybrid_Machine_Learning_Models
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+python hybrid_model.py
+```
+
+Expected outputs:
+- console preview of LSTM/linear/hybrid predictions
+- `hybrid_predictions.csv`
+
+---
+
+### How you may enhance this project
+- **Sophisticated Ensemble Methods:** A simple weighted average is a good start, but more advanced ensemble techniques can yield better results. Implement stacking, where the predictions of the LSTM and linear regression models are used as input features for a final "meta-model" that learns the best way to combine them. Alternatively, explore blending, which is similar to stacking but uses a separate validation set to train the meta-model.
+- **Attention-Based LSTMs:** Enhance the LSTM model by adding an attention mechanism. An attention layer can help the model focus on the most important time steps in the input sequence when making a prediction. This can lead to significant performance improvements, especially for long input sequences, and shows a deeper understanding of modern deep learning architectures.
+- **Explainable AI (XAI) for Feature Importance:** While LSTMs are black boxes, linear regression is highly interpretable. After training the linear model, analyze its coefficients to determine the feature importance. This will tell you which lag features are most influential in predicting the stock price, providing valuable insights into the market dynamics.
+- **Automated Hyperparameter and Weight Tuning:** Instead of manually tuning the ensemble weights, use an optimization algorithm to find the optimal weights. Bayesian optimization is a powerful technique for this. You can also use it to tune the hyperparameters of the individual models (e.g., the number of units in the LSTM, the learning rate) for the best possible performance.
+- **Portfolio Forecasting with Correlation Modeling:** Extend the project from forecasting a single asset to forecasting a portfolio of multiple stocks. This is a more realistic and complex problem. You will need to account for the correlations between the different stocks, potentially by using a multivariate LSTM or by modeling the covariance matrix. This demonstrates an understanding of portfolio theory and advanced time series analysis.
