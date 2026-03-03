@@ -1,0 +1,33 @@
+## 8. MLOps Pipeline using Apache Airflow (Python)
+
+### Description
+An MLOps pipeline automates the machine learning lifecycle, from data preprocessing and model training to scheduling and monitoring. This project introduces you to building such a pipeline using Apache Airflow. You will create an Airflow DAG (Directed Acyclic Graph) that orchestrates a series of tasks to train a model and make it ready for deployment, ensuring that the process is repeatable, reliable, and can be scheduled to run automatically.
+
+### Prerequisites
+Python, Airflow concepts (DAG, tasks), model training basics, filesystem/project structure.
+
+### Resources
+`screentime_analysis.csv` (app usage behavior dataset).
+
+### Project Workflow
+The project begins with writing the core Python functions for your machine learning task. This includes a function for data preprocessing (feature engineering, encoding, scaling) and a function for training a baseline model (e.g., a Random Forest regressor) and evaluating its Mean Absolute Error (MAE).
+
+Next, you will define an Airflow DAG. Within this DAG, you will define a series of `PythonOperator` tasks, where each task calls one of your Python functions. This creates a workflow where the raw data is first processed, and then the cleaned data is used to train the model.
+
+The final part of the project involves setting up and running Airflow. You will initialize the Airflow database, start the Airflow scheduler and webserver, and then trigger your DAG from the Airflow UI. You will monitor the execution of the pipeline and validate the outputs and artifacts it produces.
+
+### Lab steps
+1. Write preprocessing function (feature engineering + encoding + scaling).
+2. Train a baseline model (e.g., Random Forest) and evaluate MAE.
+3. Define an Airflow DAG and PythonOperator tasks.
+4. Initialize Airflow DB; start scheduler and webserver.
+5. Run/monitor pipeline from UI; validate outputs/artifacts.
+
+---
+
+### How you may enhance this project
+- **Model Registry Integration:** A crucial part of MLOps is model versioning. Integrate your pipeline with a model registry like MLflow or Weights & Biases. This involves adding tasks to your DAG that log the trained model, its parameters, and its performance metrics to the registry. This creates a full audit trail of your models and makes it easy to compare different versions.
+- **Automated Retraining with Triggers:** Instead of running on a fixed schedule, make your pipeline smarter. Create a separate DAG that runs a data validation job. If this job detects significant data drift (e.g., using a library like Evidently AI), it can then trigger your main training DAG to retrain the model on the new data. This is a key concept in adaptive machine learning systems.
+- **CI/CD for Machine Learning (ML-CI/CD):** Treat your DAGs and model code like any other software artifact. Implement a CI/CD pipeline using a tool like GitHub Actions or Jenkins. This pipeline should automatically run tests on your DAGs (e.g., to check for cycles) and your model code whenever you push changes, ensuring that your production pipelines are always stable.
+- **Robust Data Validation:** Add a dedicated data validation step to your pipeline using a framework like Great Expectations. This involves creating "expectations" about your data (e.g., "column `age` should be between 0 and 100"). Your DAG would then have a task that validates the input data against these expectations and fails the pipeline if the data quality is not met.
+- **End-to-End Pipeline with Serving:** Extend the pipeline to be truly end-to-end. After a model is successfully trained and validated, add a final task that automatically deploys it as a REST API for inference. You could use a tool like BentoML to package the model and its dependencies, and then have an Airflow operator that pushes this service to a deployment environment.
