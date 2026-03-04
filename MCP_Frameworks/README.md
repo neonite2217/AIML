@@ -4,7 +4,7 @@ A comprehensive collection of Model Context Protocol (MCP) servers and integrati
 
 ## 🚀 Projects Overview
 
-### 1. [AI-HR Assistant](./AI-HR/) - **PostgreSQL + Gmail + Obsidian Integration**
+### 1. [AI-HR Assistant](./ai-hr/) - **PostgreSQL + Gmail + Obsidian Integration**
 **Technologies:** PostgreSQL MCP, Gmail MCP, Obsidian MCP, Claude Desktop  
 **Type:** Multi-server orchestration  
 **Deployment:** Local MCP servers with Docker Desktop  
@@ -19,7 +19,7 @@ An intelligent HR automation system demonstrating MCP server orchestration for l
 
 ---
 
-### 2. [ClaudeOPS](./ClaudeOPS/) - **System Administration & DevOps**
+### 2. [ClaudeOPS](./claude-ops/) - **System Administration & DevOps**
 **Technologies:** Python, Docker, FastMCP, System Commands  
 **Type:** Local MCP server  
 **Deployment:** Docker container with stdio transport  
@@ -35,7 +35,7 @@ Transform Claude into your personal system administrator with secure command exe
 
 ---
 
-### 3. [Remote Railway Server](./remote%20railway%20server/) - **Knowledge Base Server**
+### 3. [Remote Railway Server](./remote-railway-server/) - **Knowledge Base Server**
 **Technologies:** TypeScript, SQLite, Express, Railway/Sevalla  
 **Type:** Remote MCP server  
 **Deployment:** Cloud-hosted with REST API + MCP protocol  
@@ -51,7 +51,7 @@ Production-ready knowledge management server with persistent storage.
 
 ---
 
-### 4. [Claude News](./Claude%20news/) - **Multi-Protocol Info Suite**
+### 4. [Claude News](./claude-news/) - **Multi-Protocol Info Suite**
 **Technologies:** CoinGecko SSE, OpenWeather API, Local Python servers  
 **Type:** Mixed local/remote servers  
 **Deployment:** SSE remote + stdio local  
@@ -122,25 +122,25 @@ Mixed transport protocols for different data sources.
 
 **For HR/Business Automation:**
 ```bash
-cd "AI-HR"
+cd "ai-hr"
 # Follow setup guide for PostgreSQL + Gmail + Obsidian integration
 ```
 
 **For System Administration:**
 ```bash
-cd "ClaudeOPS"
+cd "claude-ops"
 # Run the installer script for containerized system tools
 ```
 
 **For Knowledge Management:**
 ```bash
-cd "remote railway server"
+cd "remote-railway-server"
 # Deploy to Railway/Sevalla for persistent knowledge base
 ```
 
 **For Information Aggregation:**
 ```bash
-cd "Claude news"
+cd "claude-news"
 # Set up mixed local/remote servers for news and data
 ```
 
@@ -208,17 +208,17 @@ Each project includes:
 version: '3.8'
 services:
   ai-hr:
-    build: ./AI-HR
+    build: ./ai-hr
     environment:
       - POSTGRES_URL=postgresql://user:pass@db:5432/hr
   
   claude-ops:
-    build: ./ClaudeOPS
+    build: ./claude-ops
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   
   knowledge-base:
-    build: ./remote railway server
+    build: ./remote-railway-server
     ports:
       - "3000:3000"
 ```
