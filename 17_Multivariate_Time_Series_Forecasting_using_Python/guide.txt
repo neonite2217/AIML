@@ -1,0 +1,58 @@
+# University of Gemini - Department of Computer Science
+# Advanced Topics in AI and Data Science - Lab Project Handbook
+
+## Introduction
+
+This handbook provides a series of advanced, hands-on lab projects designed to complement the theoretical coursework in advanced AI and data science. The projects are curated to expose students to a breadth of technologies and techniques, from statistical analysis in R to high-performance computing in C++ and Rust, and cutting-edge AI model development in Python.
+
+Each project is designed to be a self-contained learning module. Students are expected to have the prerequisite knowledge listed for each project. The lab steps provide a clear, step-by-step guide to completing the project.
+
+## Language and Technology Distribution Strategy
+
+The projects in this handbook are distributed across several programming languages to reflect the diverse ecosystem of tools used in modern data science and AI. The distribution is as follows:
+
+*   **Python (~60%):**  For advanced AI, deep learning, machine learning operations (MLOps), and large language models (LLMs).
+*   **R (~15%):** For statistical modeling, data visualization, and exploratory data analysis.
+*   **C++ (~15%):** For performance-critical applications, simulations, and implementing algorithms from scratch.
+*   **Rust (~10%):** For systems-level programming, data pipelines, and high-performance tooling.
+
+---
+
+---
+
+## 3. Multivariate Time Series Forecasting using R
+
+### Description
+Multivariate forecasting predicts multiple time series together while modeling their interactions (e.g., several stock prices). This guide uses a Vector Autoregression (VAR) model after enforcing stationarity via differencing. This approach is powerful because it captures the interdependencies between different time series, which can lead to more accurate forecasts than modeling each series independently.
+
+### Prerequisites
+Time series basics, stationarity, ADF test, tidyverse, lubridate, vars, plotting.
+
+### Resources
+`stocks.csv` (multiple tickers with OHLCV + Adj Close).
+
+### Project Workflow
+Your project will start with data loading and preparation. You'll load the `stocks.csv` dataset, convert the date column to a proper time series format, and handle any missing values. A key initial step is to visualize the closing prices of the different stocks to understand their trends.
+
+The core of this project is ensuring the time series data is stationary, a prerequisite for the VAR model. You will perform the Augmented Dickey-Fuller (ADF) test to check for stationarity. Since most stock price series are non-stationary, you will apply differencing to the series and then re-run the ADF test to confirm that stationarity has been achieved.
+
+Once the data is stationary, you will reshape it into a wide format, where each column represents a different stock's differenced price series. You will then fit a VAR model to this data. The final steps involve using the trained model to make future forecasts, reversing the differencing transformation to get the predictions back in the original scale, and plotting the forecasts against the actual values to visually assess the model's performance.
+
+### Lab steps
+1. Load dataset; convert `Date` to date objects.
+2. Check missing values and ticker counts.
+3. Plot `Close` trends per ticker.
+4. Run ADF test per ticker’s `Close`.
+5. Difference series (`Diff_Close`) and ADF again to confirm stationarity.
+6. Pivot differenced data to wide format (tickers as columns).
+7. Fit VAR and forecast future steps.
+8. Reverse differencing (cumsum + last close) and plot results.
+
+---
+
+### How you may enhance this project
+- **Advanced Time Series Models:** The VAR model is a good starting point, but you can demonstrate more advanced skills by comparing it with other models. Implement a Vector Error Correction (VEC) model if you find that the time series are cointegrated. Alternatively, explore deep learning models like LSTMs or GRUs, which are excellent at capturing complex non-linear relationships and can be built using libraries like `keras` or `torch` in R.
+- **Systematic Hyperparameter Tuning:** Instead of choosing a fixed number of lags for the VAR model, use a systematic approach. Programmatically select the optimal number of lags by iterating through a range of values and choosing the one that minimizes an information criterion like AIC (Akaike Information Criterion) or BIC (Bayesian Information Criterion). This shows a more principled approach to model selection.
+- **Incorporate Exogenous Variables (VARMAX):** Enhance your model by including external variables (exogenous variables) that could influence stock prices. This could be market sentiment indicators from financial news, general economic data (like inflation rates or GDP growth), or even social media trends. This transforms your model into a VARMAX (Vector Autoregression with Exogenous Variables) model and demonstrates your ability to integrate diverse data sources.
+- **Robust Evaluation with Rolling Forecast:** A simple train-test split can be misleading for time series data. Implement a more robust evaluation method like a rolling forecast (or backtesting). This involves training the model on a window of data, making a forecast for the next step, and then "rolling" the window forward to include the next data point and repeating the process. This gives a more realistic estimate of how the model would perform in a real-world, live-trading scenario.
+- **Dynamic and Interactive Dashboard:** Build a professional, interactive dashboard using R Shiny or Plotly Dash. This dashboard should allow a user to select different stocks from the dataset, choose different time periods for analysis, select the forecasting model to use, and visualize the forecasts along with key performance metrics (like RMSE or MAE). This is a powerful way to present your work in a portfolio.
