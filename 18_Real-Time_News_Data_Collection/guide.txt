@@ -1,0 +1,32 @@
+## 14. Real-Time News Data Collection (R)
+
+### Description
+This project focuses on building a data collection pipeline that programmatically pulls news articles from a live API, processes the response, and saves the data in a structured format. You will also create a simple visualization to get a quick overview of the trending topics in the collected news. This is a foundational project for any kind of trend analysis, media monitoring, or NLP task that relies on up-to-date text data.
+
+### Prerequisites
+REST APIs, httr, jsonlite, tidyverse, basic text aggregation/visualization.
+
+### Resources
+News API service access (API key); live news JSON responses.
+
+### Project Workflow
+The project starts with making a request to a news API endpoint. You will use the `httr` package in R to make a GET request, passing your API key and any query parameters (like keywords or a date range) to filter the articles.
+
+Once you receive a response from the API, which will be in JSON format, you will use the `jsonlite` package to parse it into a structured R object (like a list or a data frame). You will then process this object, extracting the relevant fields (e.g., title, description, source, publication date) and organizing them into a clean `tibble`.
+
+For reproducibility and further analysis, you will save this `tibble` to a CSV file. As a final step, to get a quick insight into the collected data, you will create a word cloud from the article titles and descriptions to visualize the most frequently occurring terms.
+
+### Lab steps
+1. Call news endpoint with query parameters (keywords/date range) using httr.
+2. Convert JSON to a tibble (title, description, source, date, etc.).
+3. Save to CSV for reproducibility.
+4. Create word cloud from titles+descriptions for trend view.
+
+---
+
+### How you may enhance this project
+- **Robust Database Storage:** Saving to a CSV is good for a single run, but for a real pipeline, you need a database. Enhance the project by storing the collected news articles in a database like SQLite (for a lightweight solution) or PostgreSQL (for a more powerful, production-ready option). This will prevent duplicate entries and allow for much more efficient querying and analysis of the data over time.
+- **Automated Scheduling and Logging:** A real-time pipeline needs to run automatically. Schedule your R script to run at regular intervals (e.g., every 30 minutes) using a system tool like `cron` on Linux/macOS or Task Scheduler on Windows. Add a robust logging mechanism that records when the script runs, how many articles were collected, and any errors that occurred.
+- **Advanced Trend and Anomaly Detection:** A word cloud is a simple visualization. Go deeper by implementing a more sophisticated trend detection algorithm. You could track the frequency of keywords or n-grams over time to identify emerging topics. You could also implement an anomaly detection system to alert you when a topic suddenly spikes in popularity.
+- **Full-Text and Sentiment Analysis:** The current project only looks at titles and descriptions. Extend it to fetch the full text of each article (this may require an additional web scraping step). Once you have the full text, perform sentiment analysis to gauge the overall sentiment (positive, negative, neutral) towards different topics, companies, or people mentioned in the news.
+- **Interactive News Analysis Dashboard:** Build a real-time dashboard using R Shiny. This dashboard could display a live feed of the latest news articles, a word cloud of trending topics that updates automatically, a historical trend chart for user-selected keywords, and the results of your sentiment analysis. This is a classic and highly effective portfolio project.

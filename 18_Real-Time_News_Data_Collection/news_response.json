@@ -1,0 +1,30 @@
+{
+ "status": "ok",
+ "totalResults": 2,
+ "articles": [
+  {
+   "source": {
+    "id": "cnn",
+    "name": "CNN"
+   },
+   "author": "John Doe",
+   "title": "Big Tech Stocks Soar",
+   "description": "Shares of major technology companies saw a significant increase today.",
+   "url": "https://example.com/1",
+   "publishedAt": "2024-01-01T12:00:00Z",
+   "content": "..."
+  },
+  {
+   "source": {
+    "id": "bbc-news",
+    "name": "BBC News"
+   },
+   "author": "Jane Smith",
+   "title": "AI Regulation Debated by Lawmakers",
+   "description": "Governments around the world are discussing how to regulate artificial intelligence.",
+   "url": "https://example.com/2",
+   "publishedAt": "2024-01-01T13:00:00Z",
+   "content": "..."
+  }
+ ]
+}

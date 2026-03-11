@@ -1,0 +1,12 @@
+# R Package Requirements for News Collection Pipeline
+# Install with: install.packages(c("tidyverse", "jsonlite", "httr", "wordcloud", "tm", "RSQLite", "lubridate", "shiny", "DT"))
+
+tidyverse
+jsonlite
+httr
+wordcloud
+tm
+RSQLite
+lubridate
+shiny
+DT

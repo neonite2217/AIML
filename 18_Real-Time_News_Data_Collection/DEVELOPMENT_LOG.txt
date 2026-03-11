@@ -1,0 +1,141 @@
+================================================================================
+                    NEWS COLLECTION PROJECT - DEVELOPMENT LOG
+================================================================================
+
+Project: Real-Time News Data Collection (R)
+Date: 2024
+
+--------------------------------------------------------------------------------
+OVERVIEW
+--------------------------------------------------------------------------------
+Enhanced the base R script with production-ready features including API 
+integration, database storage, logging, and sentiment analysis.
+
+--------------------------------------------------------------------------------
+CHANGES MADE
+--------------------------------------------------------------------------------
+
+1. API INTEGRATION (httr)
+   - Added httr::GET() to call News API endpoint
+   - Supports configurable query parameters (keyword, language, page size)
+   - Falls back to dummy data if no API key provided
+   - File: news_collection.R, lines ~100-130
+
+2. DATABASE STORAGE (SQLite)
+   - Created news_database.sqlite for persistent storage
+   - Two tables:
+     * articles: stores news articles with unique URL constraint
+     * collection_log: tracks pipeline execution history
+   - Duplicate detection prevents re-inserting same articles
+   - File: news_collection.R, lines ~45-100
+
+3. LOGGING SYSTEM
+   - Configurable log file (default: news_collection.log)
+   - Three log levels: INFO, WARNING, ERROR
+   - Timestamped entries for audit trails
+   - Logs both to console and file simultaneously
+   - File: news_collection.R, lines ~35-42
+
+4. SENTIMENT ANALYSIS
+   - Basic lexicon-based sentiment scoring
+   - Calculates sentiment for each article based on title + description
+   - Positive/negative word lists for scoring
+   - Sentiment score stored in database (-1 to 1 scale)
+   - Summary by source available
+   - File: news_collection.R, lines ~155-185
+
+5. CONFIGURATION
+   - All settings centralized in CONFIG list
+   - API key from environment variable NEWS_API_KEY
+   - Easy to modify query, language, page size
+   - File: news_collection.R, lines ~25-33
+
+6. ERROR HANDLING
+   - Comprehensive tryCatch blocks
+   - Pipeline status tracking (SUCCESS/ERROR)
+   - Error messages logged and stored in database
+   - Graceful fallbacks for missing data
+
+7. TREND DETECTION
+   - Keyword frequency analysis from titles/descriptions
+   - Anomaly detection using z-score (sentiment outliers)
+   - Top N trending terms identified
+   - File: news_collection.R, lines ~312-370
+
+8. SHINY DASHBOARD
+   - Interactive web dashboard (app.R)
+   - Latest news table with filtering by source
+   - Word cloud visualization
+   - Sentiment analysis charts by source
+   - Collection history log view
+   - Real-time data refresh
+   - File: app.R (separate file)
+
+--------------------------------------------------------------------------------
+NEW FILES CREATED
+--------------------------------------------------------------------------------
+- news_collection.R          (enhanced main script)
+- app.R                     (R Shiny dashboard)
+- news_database.sqlite     (created at runtime)
+- news_collection.log      (created at runtime)
+- news_articles.csv        (updated output)
+
+--------------------------------------------------------------------------------
+REQUIRED R PACKAGES
+--------------------------------------------------------------------------------
+- tidyverse
+- jsonlite
+- httr
+- wordcloud
+- tm
+- RSQLite
+- lubridate
+- shiny
+- DT
+
+Install: install.packages(c("tidyverse", "jsonlite", "httr", "wordcloud", "tm", "RSQLite", "lubridate", "shiny", "DT"))
+
+--------------------------------------------------------------------------------
+USAGE
+--------------------------------------------------------------------------------
+
+# Set API key (optional - works without it using dummy data)
+export NEWS_API_KEY="your_api_key_here"
+
+# Run the pipeline
+Rscript news_collection.R
+
+# Or in R console
+source("news_collection.R")
+main()
+
+# Run the dashboard
+shiny::runApp("app.R")
+
+--------------------------------------------------------------------------------
+DATABASE QUERIES
+--------------------------------------------------------------------------------
+
+# View all articles
+library(RSQLite)
+con <- dbConnect(SQLite(), "news_database.sqlite")
+dbGetQuery(con, "SELECT * FROM articles")
+
+# View collection history
+dbGetQuery(con, "SELECT * FROM collection_log")
+
+# Count articles by source
+dbGetQuery(con, "SELECT source_name, COUNT(*) as count FROM articles GROUP BY source_name")
+
+# Average sentiment by source
+dbGetQuery(con, "SELECT source_name, AVG(sentiment_score) as avg_sentiment FROM articles GROUP BY source_name")
+
+--------------------------------------------------------------------------------
+ENHANCEMENTS FOR FUTURE
+--------------------------------------------------------------------------------
+1. Add cron/scheduler for automated runs
+2. Implement advanced NLP with sentimentr package
+3. Add email notifications on errors
+4. Support PostgreSQL for production
+5. Add keyword alerting system
+================================================================================
