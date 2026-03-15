@@ -1,0 +1,33 @@
+/home/ansh/.local/lib/python3.14/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 13] Permission denied.  joblib will operate in serial mode
+  warnings.warn("%s.  joblib will operate in serial mode" % (e,))
+/home/ansh/.local/lib/python3.14/site-packages/torch/autograd/graph.py:865: UserWarning: CUDA initialization: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 304: OS call failed or operation not supported on this OS (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+============================================================
+Synthetic Data Generation with GAN (PyTorch)
+============================================================
+0000 [D loss: 0.6920 | D accuracy: 50.00%] [G loss: 0.7378]
+0100 [D loss: 0.6871 | D accuracy: 59.38%] [G loss: 0.6973]
+0200 [D loss: 0.6882 | D accuracy: 62.50%] [G loss: 0.6960]
+0300 [D loss: 0.6834 | D accuracy: 71.88%] [G loss: 0.7009]
+
+Generated Data (first 10 rows):
+ Usage  Notifications  Times opened
+    51             20            77
+    16             42            56
+    83              2            33
+    51             42            76
+    64             42            80
+    79              2            34
+    54              3            45
+    47              3            52
+    25             17            51
+    53              2            51
+
+Real vs Synthetic Means:
+               real_mean  synthetic_mean
+Usage               56.4           55.80
+Notifications       18.6           18.25
+Times opened        56.2           58.65
+
+Saved synthetic data to: synthetic_screentime_data.csv
+Training and generation complete.

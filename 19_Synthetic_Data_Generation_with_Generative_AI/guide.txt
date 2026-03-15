@@ -1,0 +1,71 @@
+# University of Gemini - Department of Computer Science
+# Advanced Topics in AI and Data Science - Lab Project Handbook
+
+## Introduction
+
+This handbook provides a series of advanced, hands-on lab projects designed to complement the theoretical coursework in advanced AI and data science. The projects are curated to expose students to a breadth of technologies and techniques, from statistical analysis in R to high-performance computing in C++ and Rust, and cutting-edge AI model development in Python.
+
+Each project is designed to be a self-contained learning module. Students are expected to have the prerequisite knowledge listed for each project. The lab steps provide a clear, step-by-step guide to completing the project.
+
+## Language and Technology Distribution Strategy
+
+The projects in this handbook are distributed across several programming languages to reflect the diverse ecosystem of tools used in modern data science and AI. The distribution is as follows:
+
+*   **Python (~60%):**  For advanced AI, deep learning, machine learning operations (MLOps), and large language models (LLMs).
+*   **R (~15%):** For statistical modeling, data visualization, and exploratory data analysis.
+*   **C++ (~15%):** For performance-critical applications, simulations, and implementing algorithms from scratch.
+*   **Rust (~10%):** For systems-level programming, data pipelines, and high-performance tooling.
+
+---
+
+---
+
+## 5. Synthetic Data Generation with Generative AI (Python)
+
+### Description
+Synthetic data is artificially generated data that mimics the patterns and statistical properties of real-world data. This project introduces you to the concept of using a Generative Adversarial Network (GAN) to create synthetic tabular data. You will build a GAN where a "generator" network learns to create realistic fake app-usage data, and a "discriminator" network learns to distinguish the fake data from the real data.
+
+### Prerequisites
+Python, TensorFlow/Keras, GAN basics, scaling/normalization, NumPy/Pandas.
+
+### Resources
+`Screentime-App-Details.csv` (Usage, Notifications, Times opened, plus identifiers like Date/App).
+
+### Project Workflow
+The project starts with loading and preparing the real-world dataset. You will use Pandas to load `Screentime-App-Details.csv` and select only the numerical features suitable for the initial GAN model, dropping identifiers. A critical preprocessing step is to normalize these features, typically to a range of [0, 1] or [-1, 1], using `MinMaxScaler` to help with model training stability.
+
+Next, you will define the two core components of the GAN using TensorFlow/Keras: the generator and the discriminator. The generator will take random noise as input and output data with the same shape as the real data. The discriminator will be a binary classifier that takes a data sample and predicts whether it's real or fake.
+
+The main part of the project is the training loop, where these two networks compete. You will alternate between training the discriminator on batches of real and fake data, and training the generator to produce better fakes that can fool the discriminator. Finally, you will use the trained generator to create new, synthetic data samples and, as an optional step, inverse-transform them back to their original scale.
+
+### Lab steps
+1. Load dataset and select features to generate (drop identifiers).
+2. Normalize numeric features to [0,1] using MinMaxScaler.
+3. Build generator network (Dense + LeakyReLU + BatchNorm).
+4. Build discriminator network (binary classifier).
+5. Train GAN by alternating discriminator and generator updates.
+6. Sample synthetic rows and inverse-transform back to original scales (optional).
+
+### Build and Run (Updated)
+```bash
+cd 19_Synthetic_Data_Generation_with_Generative_AI
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+python gan.py
+```
+
+Expected outputs:
+- GAN training progress logs
+- printed synthetic sample rows
+- `synthetic_screentime_data.csv`
+
+---
+
+### How you may enhance this project
+- **Advanced GAN Architectures:** A simple GAN can be hard to train. Upgrade to a more advanced architecture for better stability and quality. A Wasserstein GAN (WGAN) uses a different loss function that correlates better with sample quality, making training more stable. A Conditional GAN (cGAN) would allow you to generate data conditioned on a specific feature, for example, generating screen time data for a particular app, adding a new layer of control.
+- **Quantitative Data Quality Evaluation:** Don't just look at the data; prove its quality. Implement quantitative metrics to rigorously evaluate your synthetic data. You can compare the statistical properties (e.g., column-wise means, standard deviations, and the correlation matrix) between the real and synthetic sets. A more advanced "Train-Synthetic-Test-Real" (TSTR) approach involves training a machine learning model on your synthetic data and evaluating its performance on a held-out set of real data, which is a strong indicator of utility.
+- **Sophisticated Categorical Data Handling:** Real-world data is rarely purely numerical. Extend your GAN to handle categorical features. This is a non-trivial task. You could represent categories using one-hot encoding for the discriminator's input, and for the generator's output, you might use a Gumbel-Softmax activation function to approximate discrete categorical sampling during training.
+- **Generative Models for Time Series:** The current dataset has a time component. Adapt your GAN to generate synthetic time series data. This requires evolving from simple Dense layers to using recurrent layers like LSTMs or GRUs in both the generator and discriminator to capture temporal dependencies and sequences.
+- **Ensuring Privacy Preservation:** A key motivation for synthetic data is privacy. Explore techniques to make your generated data more private. This could involve adding noise to the discriminator's inputs or, for a more advanced project, integrating the principles of Differential Privacy into the training process to provide mathematical guarantees about the privacy of the generated data.

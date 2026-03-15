@@ -1,0 +1,1 @@
+Read guide.txt and gan.py. Implement the Generative AI synthetic data generation GAN using Screentime-App-Details.csv. Setup venv, install requirements.txt. Run and produce synthetic CSV output. Write BUILD_LOG.md.
