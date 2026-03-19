@@ -1,0 +1,33 @@
+## 18. Text Classification Pipeline (R)
+
+### Description
+This project guides you through building a full pipeline for text classification using classical machine learning techniques in R. You will learn how to take a raw text dataset, convert it into a numerical format suitable for machine learning, train a classification model, and use it to predict the category of new, unseen text.
+
+### Prerequisites
+NLP classification basics, quanteda, train/test splitting, a classification model (e.g., naive bayes, svm).
+
+### Resources
+20 Newsgroups dataset.
+
+### Lab steps
+1. Load 20 Newsgroups and split.
+2. Create a document-feature matrix using quanteda.
+3. Train a classifier (e.g., Naive Bayes).
+4. Predict class for new sentence(s).
+5. Evaluate the model performance.
+
+---
+
+### Project Workflow
+The project workflow starts with loading the 20 Newsgroups dataset and splitting it into a training and a testing set. You will then use the `quanteda` package to process the text data. This involves creating a `corpus`, tokenizing the text, removing stop words, and stemming.
+
+The core of the project is the creation of a Document-Feature Matrix (DFM), which is a numerical representation of the text where rows are documents and columns are words, and the values are the word frequencies (TF-IDF).
+
+Once you have the DFM, you will train a classical machine learning model, such as Naive Bayes or a Support Vector Machine (SVM), on the training data. After the model is trained, you will use it to predict the categories of the documents in your test set. Finally, you will evaluate the performance of your model using metrics like accuracy, precision, recall, and the F1-score.
+
+### How you may enhance this project
+- **Modern Transformer-Based Models:** While classical ML models are a good starting point, modern NLP is dominated by transformer models. A great enhancement would be to compare your baseline model with a transformer-based model like BERT or DistilBERT. You can use a library like `text` or `reticulate` in R to interface with Python's Hugging Face library and fine-tune a pre-trained transformer for this task, which will likely result in a significant performance boost.
+- **Systematic Hyperparameter Tuning:** Instead of using the default parameters for your model, use a systematic hyperparameter tuning technique to find the optimal settings. Implement a grid search or a random search to explore different combinations of parameters for your vectorization process (e.g., min/max document frequency) and your classification model (e.g., the cost parameter for an SVM).
+- **Explainable AI (XAI) for NLP:** It's often important to understand *why* a model is making a certain prediction. Use an XAI library like `lime` or `DALEX` in R to explain the predictions of your text classifier. This will allow you to see which words or phrases were most influential in the model's decision for a given document, which is great for debugging and building trust in the model.
+- **Advanced Feature Engineering and Imbalanced Data:** Experiment with more advanced feature engineering. Instead of just TF-IDF, you could use n-grams or word embeddings as features. If your chosen dataset has an imbalanced class distribution, implement techniques to handle this, such as oversampling the minority class (e.g., with the SMOTE algorithm) or undersampling the majority class.
+- **Deploy as a Plumber API:** To make your model accessible to other applications, wrap it in a web API using the `plumber` package in R. This will allow you to create an endpoint that accepts a piece of text as input and returns the predicted class and a confidence score, turning your R script into a deployable model.
