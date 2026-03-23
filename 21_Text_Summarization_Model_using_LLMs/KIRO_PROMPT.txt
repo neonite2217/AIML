@@ -1,0 +1,1 @@
+Read guide.txt and text_summarization.py. Implement the text summarization model using HuggingFace transformers (facebook/bart-large-cnn or similar free model). Setup venv, install requirements.txt. Run on sample text. Write BUILD_LOG.md.

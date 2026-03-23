@@ -1,0 +1,57 @@
+# University of Gemini - Department of Computer Science
+# Advanced Topics in AI and Data Science - Lab Project Handbook
+
+## Introduction
+
+This handbook provides a series of advanced, hands-on lab projects designed to complement the theoretical coursework in advanced AI and data science. The projects are curated to expose students to a breadth of technologies and techniques, from statistical analysis in R to high-performance computing in C++ and Rust, and cutting-edge AI model development in Python.
+
+Each project is designed to be a self-contained learning module. Students are expected to have the prerequisite knowledge listed for each project. The lab steps provide a clear, step-by-step guide to completing the project.
+
+## Language and Technology Distribution Strategy
+
+The projects in this handbook are distributed across several programming languages to reflect the diverse ecosystem of tools used in modern data science and AI. The distribution is as follows:
+
+*   **Python (~60%):**  For advanced AI, deep learning, machine learning operations (MLOps), and large language models (LLMs).
+*   **R (~15%):** For statistical modeling, data visualization, and exploratory data analysis.
+*   **C++ (~15%):** For performance-critical applications, simulations, and implementing algorithms from scratch.
+*   **Rust (~10%):** For systems-level programming, data pipelines, and high-performance tooling.
+
+---
+
+---
+
+## 4. Text Summarization Model using LLMs (Python)
+
+### Description
+Text summarization compresses long text into a shorter form while preserving its core meaning. This project leverages a powerful pre-trained transformer model, T5, to perform abstractive summarization. You will learn how to use the Hugging Face `transformers` library to load the model, process input text, and generate a concise summary.
+
+### Prerequisites
+Python, Hugging Face Transformers, basic tokenization and generation parameters.
+
+### Resources
+Pretrained T5 model family (`t5-small`, `t5-base`, `t5-large`).
+
+### Project Workflow
+The project starts with setting up your Python environment and installing the `transformers` library from Hugging Face. You'll then select a T5 model variant (e.g., `t5-small` for faster computation) and load both the pre-trained model and its corresponding tokenizer.
+
+The main part of the project involves preparing the input text for the model. For T5, this requires adding a specific prefix, like "summarize: ", to instruct the model on the task it needs to perform. You will then tokenize the input text, ensuring it is truncated to fit within the model's maximum context window.
+
+Finally, you will use the model's `generate` method to create the summary. You will explore different generation strategies, such as tuning the `length_penalty` and using beam search to improve the quality of the output. The last step is to decode the generated tokens back into a human-readable summary and qualitatively assess the result.
+
+### Lab steps
+1. Choose T5 model size based on compute.
+2. Install `transformers`.
+3. Load tokenizer + model.
+4. Prefix input with `"summarize:"`.
+5. Tokenize with truncation/max length.
+6. Generate summary using beam search/length penalty.
+7. Decode and evaluate quality; tune parameters.
+
+---
+
+### How you may enhance this project
+- **Extractive vs. Abstractive Analysis:** A great way to add depth is to implement an extractive summarization method and compare its output to T5's abstractive summary. Use algorithms like TextRank/PageRank on sentence similarity graphs, or simply extract the sentences with the highest TF-IDF scores. This comparative analysis demonstrates a nuanced understanding of summarization techniques.
+- **Quantitative Evaluation with ROUGE:** Move beyond subjective evaluation. Use standard NLP metrics to score your summaries. The ROUGE (Recall-Oriented Understudy for Gisting Evaluation) score is the industry standard for this. You can calculate it by comparing your model's output to a "gold standard" or reference summary, providing a quantitative measure of your model's performance.
+- **Interactive Summarization Web App:** To showcase your project, build a user-friendly web application using a framework like Flask, FastAPI, or Streamlit. The app should provide a text box for users to paste a long article and a button to generate the summary. Displaying the original text and the summarized version side-by-side makes for a compelling demo.
+- **Advanced Strategy for Long Documents:** Transformer models have a fixed input length. For real-world use, you need a strategy for long documents. Implement a "map-reduce" style chunking strategy: split the document into overlapping chunks, summarize each chunk individually (the "map" step), and then write a final prompt to summarize the summaries into a coherent whole (the "reduce" step). This is a common and powerful pattern.
+- **Domain-Specific Fine-tuning:** A pre-trained model is a generalist. To create a specialist, fine-tune the T5 model on a specific dataset, such as news articles (e.g., the XSum dataset) or scientific papers (e.g., the arXiv dataset). This will significantly improve the model's ability to summarize text from that particular domain and is a hallmark of a high-quality NLP project.
