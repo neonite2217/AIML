@@ -1,0 +1,55 @@
+# University of Gemini - Department of Computer Science
+# Advanced Topics in AI and Data Science - Lab Project Handbook
+
+## Introduction
+
+This handbook provides a series of advanced, hands-on lab projects designed to complement the theoretical coursework in advanced AI and data science. The projects are curated to expose students to a breadth of technologies and techniques, from statistical analysis in R to high-performance computing in C++ and Rust, and cutting-edge AI model development in Python.
+
+Each project is designed to be a self-contained learning module. Students are expected to have the prerequisite knowledge listed for each project. The lab steps provide a clear, step-by-step guide to completing the project.
+
+## Language and Technology Distribution Strategy
+
+The projects in this handbook are distributed across several programming languages to reflect the diverse ecosystem of tools used in modern data science and AI. The distribution is as follows:
+
+*   **Python (~60%):**  For advanced AI, deep learning, machine learning operations (MLOps), and large language models (LLMs).
+*   **R (~15%):** For statistical modeling, data visualization, and exploratory data analysis.
+*   **C++ (~15%):** For performance-critical applications, simulations, and implementing algorithms from scratch.
+*   **Rust (~10%):** For systems-level programming, data pipelines, and high-performance tooling.
+
+---
+
+---
+
+## 1. Topic Modelling using R
+
+### Description
+Topic Modelling is an NLP technique to discover hidden themes in a set of documents. It finds word patterns and groups documents into topic clusters; here it uses Latent Dirichlet Allocation (LDA). This project will guide you through the process of taking a raw text dataset, cleaning it, and applying LDA to uncover latent topics.
+
+### Prerequisites
+R, tidyverse, quanteda, topicmodels basics (tokenization/stopwords/lemmatization), basic unsupervised learning.
+
+### Resources
+`articles.csv` (articles text + titles).
+
+### Project Workflow
+This project follows a standard NLP workflow. You will start by setting up your R environment and loading the necessary libraries for data manipulation and topic modeling. The first major step is data exploration and preprocessing, where you will load the `articles.csv` dataset and clean the text data. This involves converting text to lowercase, removing punctuation and stop words, and stemming words to their root form.
+
+Once the text is clean, you will transform it into a numerical representation suitable for machine learning, specifically a Document-Feature Matrix (DFM). With the DFM in hand, you will apply the Latent Dirichlet Allocation (LDA) algorithm, starting with a predefined number of topics (k=5). You will then analyze the results to understand the word compositions of each topic. Finally, you will assign the most likely topic to each document and visualize the results to better understand the topic distribution.
+
+### Lab steps
+1. Import libraries (tidyverse, quanteda, topicmodels).
+2. Load dataset and inspect columns.
+3. Clean text: lowercase → remove punctuation → tokenize → remove stopwords → stem.
+4. Create a document-feature matrix (DFM).
+5. Fit LDA (`k=5`) and inspect the topics.
+6. Assign topic label by topic with the highest probability and append to dataframe.
+7. Visualize the topics.
+
+---
+
+### How you may enhance this project
+- **Interactive Visualization:** Go beyond static plots. Use a library like `LDAvis` to create a rich, interactive visualization. This allows for a deeper exploration of the topic-term relationships, showing which terms are most representative of each topic and how the topics relate to each other in a multi-dimensional space. This is a key skill for presenting complex NLP results to a non-technical audience.
+- **Dynamic Topic Number Selection:** A major challenge in topic modeling is choosing the right number of topics. Instead of guessing a fixed number like k=5, implement a data-driven approach. Use metrics like perplexity or coherence scores (e.g., using the `ldatuning` package) to evaluate models with different numbers of topics and choose the one that performs best. This adds a layer of analytical rigor to your project.
+- **Advanced Text Preprocessing:** The quality of your topics heavily depends on the quality of your text preprocessing. Go beyond basic cleaning by incorporating more advanced techniques. Detect and treat n-grams (bigrams and trigrams) as single tokens (e.g., "New York" becomes "new_york"). Use part-of-speech (POS) tagging to perform more accurate lemmatization, ensuring that words are reduced to their base form in the correct context.
+- **Alternative Models & Comparative Analysis:** LDA is a classic, but the field has evolved. Compare its results with other topic modeling algorithms. Implement Non-Negative Matrix Factorization (NMF) for a different statistical approach, or explore cutting-edge transformer-based models like BERTopic, which can capture semantic meaning more effectively. A comparative analysis of the results is a great way to demonstrate a deeper understanding of the field.
+- **Portfolio-Ready Web Interface:** To make your project stand out, build a simple web application using R Shiny. This application should allow a user to upload their own dataset of text documents, and then it should run your topic modeling pipeline and display the results, including the topic-term distributions and the interactive visualization. This demonstrates your ability to build end-to-end data products.
