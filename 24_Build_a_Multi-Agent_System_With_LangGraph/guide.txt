@@ -1,0 +1,337 @@
+### 1️⃣ Project Overview
+
+*   **Problem Statement:** How can we design and build systems where multiple AI agents collaborate to solve a problem that is too complex for a single agent? This project explores how to create a structured, multi-step workflow for AI agents using LangGraph, enabling them to work together in a predictable and controllable way.
+*   **Target Users:** This project is for developers interested in the emerging field of AI agents and agentic workflows. The target user is familiar with basic LLM concepts and wants to learn how to orchestrate multiple agents into a coherent system that can perform tasks like research and writing.
+*   **High-Level System Description:** We will build a multi-agent system for writing a blog post. The system will consist of two agents: a "Researcher" and a "Writer". The workflow is defined as a graph using LangGraph, where each agent is a node. The state (the topic, research notes, and final article) flows from the Researcher node to the Writer node, ensuring a logical and orderly process.
+
+### 2️⃣ Development Model
+
+*   **Chosen Model (Phased):** We will use a phased approach. Agentic systems can get complex quickly, so we'll start with a simple, linear workflow and then introduce more advanced, dynamic features. This allows us to build and test each component of the system in isolation.
+*   **Phases of Development:**
+    *   **v0.1 (Core Workflow):** The first version is a two-step, linear graph: `Researcher` -> `Writer` -> `END`. This is the core of our system and ensures that the two agents can pass information to each other correctly via the shared state object.
+    *   **v0.2 (Adding a Tool):** We will enhance the `Researcher` node by giving it a tool, such as a web search capability. This makes the agent more powerful, as it can now gather real, up-to-date information from the internet instead of just relying on the knowledge baked into the LLM.
+    *   **v1.0 (Conditional Workflow):** The final version will introduce a conditional edge. After the `Researcher` node runs, a new `gatekeeper` node will check if the research is good enough. If it is, the graph proceeds to the `Writer`. If not, it loops back to the `Researcher` to try again. This makes the system more robust and autonomous.
+
+### 3️⃣ System Architecture
+
+LangGraph allows us to define our multi-agent system as a **state machine**. The architecture is composed of a central state, a set of nodes that modify the state, and a graph that defines the flow of control between the nodes.
+
+*   **Major Components:**
+    *   **The State (`AgentState`):** This is a shared dictionary that acts as the "memory" of the system. All agents can read from and write to this central state object. In our case, it holds the `topic`, the `research_notes`, and the `final_output`.
+    *   **The Nodes (`researcher_node`, `writer_node`):** Each node is a Python function that represents an agent or a tool.
+        *   **`researcher_node`:** Its responsibility is to take the `topic` from the state, perform research (in our case, by calling an LLM), and write the results back to the `research_notes` field in the state.
+        *   **`writer_node`:** Its responsibility is to take the `research_notes` from the state, use them to generate a blog post, and write the result to the `final_output` field in the state.
+    *   **The Graph (`StateGraph`):** This is the orchestrator. It defines the structure of the workflow. We define the nodes and then the **edges** that connect them, telling the system which node to run after another.
+
+*   **Data & Control Flow:**
+
+    The control flow is explicitly defined by the graph structure. The state is passed to each node, which in turn returns a dictionary of the fields it has modified. LangGraph automatically updates the central state with these changes.
+
+    ```
+    [START]
+       │
+       ▼
+    (State: {topic: "AI", research_notes: "", final_output: ""})
+       │
+       ├─> Run [Researcher Node]
+       │
+       ▼
+    (State: {topic: "AI", research_notes: "AI is...", final_output: ""})
+       │
+       ├─> Run [Writer Node]
+       │
+       ▼
+    (State: {topic: "AI", research_notes: "AI is...", final_output: "Blog post..."})
+       │
+       ▼
+    [END]
+    ```
+
+### 4️⃣ Folder & Module Structure
+
+This project is contained within a single Python script for simplicity, but it's organized in a way that could be easily expanded.
+
+```
+Build_a_Multi-Agent_System_With_LangGraph/
+├── 📜 guide.txt
+├── 🐍 langgraph_system.py
+└── 📋 requirements.txt
+```
+
+*   **`guide.txt`**: This project handbook, which provides context and step-by-step instructions.
+*   **`langgraph_system.py`**: This is the heart of our project. It contains all the Python code for defining the state, the agent nodes, and the graph itself. You will implement your logic here.
+*   **`requirements.txt`**: This file lists all the Python libraries our project depends on, such as `langchain`, `langgraph`, and `ollama`.
+
+## 28. Build a Multi-Agent System With LangGraph (Python)
+
+### Description
+This project introduces you to building complex, stateful multi-agent workflows using LangGraph. LangGraph allows you to define agentic workflows as a state graph, where each node in the graph represents an agent or a tool, and the edges represent the transitions between them. This is a powerful paradigm for creating robust and steerable agentic systems that can handle tasks requiring multiple steps and collaboration.
+
+### Prerequisites
+LangChain + LangGraph, state machines, local LLM usage, modular pipeline thinking.
+
+### Resources
+LangGraph; Ollama; a search tool; shared state schema (TypedDict-like).
+
+### 5️⃣ Step-by-Step Implementation Guide
+
+Let's build our multi-agent system. Open `langgraph_system.py` and follow along as we break down each part of the code.
+
+#### Step 1: Set Up Your Environment
+
+First, we need to install the required libraries and set up the local LLM.
+
+*   **Install Libraries:** In your terminal, run `pip install -r requirements.txt`. This will install `langchain`, `langgraph`, `ollama`, and other necessary packages.
+*   **Run Ollama:** This project requires a locally running LLM through Ollama. Make sure the Ollama server is running and you have pulled a model (e.g., `ollama run llama2`).
+*   **What it does:** The script begins by trying to connect to Ollama. If it fails, it prints an error and skips the main execution. This is a crucial check to ensure the system has the resources it needs.
+
+#### Step 2: Define the Shared State
+
+The `AgentState` is the central nervous system of our application.
+
+*   **Code:**
+    ```python
+    class AgentState(TypedDict):
+        topic: str
+        research_notes: str
+        final_output: str
+    ```
+*   **What it does:** This `TypedDict` defines the schema for our shared state. It's a dictionary with specific keys and value types.
+*   **Why it exists:** By defining a clear schema, we make it easy to see what data is being passed between agents. It helps prevent bugs and makes the code easier to understand. Every node in our graph will receive this state object as an input.
+
+#### Step 3: Implement the "Researcher" Agent Node
+
+This is our first agent. Its job is to gather information.
+
+*   **Code:**
+    ```python
+    def researcher_node(state: AgentState):
+        print("--- Researcher Node ---")
+        prompt = PromptTemplate.from_template("Give me a brief overview of the topic: {topic}")
+        chain = prompt | llm | StrOutputParser()
+        research_notes = chain.invoke({"topic": state['topic']})
+        print(f"Research Notes: {research_notes[:100]}...")
+        return {"research_notes": research_notes}
+    ```
+*   **What it does:**
+    1.  It takes the current `state` as input.
+    2.  It uses a simple LangChain Expression Language (LCEL) chain to ask the LLM for an overview of the `topic` from the state.
+    3.  It returns a dictionary with the new `research_notes`. LangGraph will automatically update the central state with this new information.
+
+#### Step 4: Implement the "Writer" Agent Node
+
+This agent's job is to use the researcher's work to create the final product.
+
+*   **Code:**
+    ```python
+    def writer_node(state: AgentState):
+        print("--- Writer Node ---")
+        prompt = PromptTemplate.from_template(
+            "Based on these notes, write a short blog post:\n\n{research_notes}"
+        )
+        chain = prompt | llm | StrOutputParser()
+        final_output = chain.invoke({"research_notes": state['research_notes']})
+        print("Blog post generated.")
+        return {"final_output": final_output}
+    ```
+*   **What it does:**
+    1.  It takes the current `state` (which now includes the research notes).
+    2.  It uses another LCEL chain to ask the LLM to write a blog post based on the `research_notes`.
+    3.  It returns a dictionary with the `final_output`.
+
+#### Step 5: Build and Compile the Graph
+
+This is where we define the workflow and connect the agents.
+
+*   **Code:**
+    ```python
+    workflow = StateGraph(AgentState)
+    workflow.add_node("researcher", researcher_node)
+    workflow.add_node("writer", writer_node)
+
+    workflow.set_entry_point("researcher")
+    workflow.add_edge("researcher", "writer")
+    workflow.add_edge("writer", END)
+
+    app = workflow.compile()
+    ```
+*   **What it does:**
+    1.  `workflow = StateGraph(AgentState)`: We initialize the graph, telling it to use our `AgentState` schema.
+    2.  `workflow.add_node(...)`: We add our two agent functions as nodes, giving each a unique string name.
+    3.  `workflow.set_entry_point("researcher")`: We declare that the `researcher` node is the first step in the workflow.
+    4.  `workflow.add_edge("researcher", "writer")`: We create a directed edge. After the `researcher` node finishes, the `writer` node should run next.
+    5.  `workflow.add_edge("writer", END)`: After the `writer` node finishes, the workflow ends.
+    6.  `app = workflow.compile()`: This compiles our graph definition into a runnable LangChain object.
+
+#### Step 6: Run the System
+
+Finally, we invoke the compiled graph with our initial input.
+
+*   **Code:**
+    ```python
+    initial_state = {"topic": "The latest advancements in AI"}
+    final_state = app.invoke(initial_state)
+    print(final_state['final_output'])
+    ```
+*   **What it does:**
+    *   We create the initial state, providing the starting `topic`.
+    *   `app.invoke(initial_state)`: This kicks off the entire workflow. LangGraph handles passing the state between the nodes according to the edges we defined.
+    *   The final state, containing the completed blog post, is returned and printed.
+
+---
+
+### 6️⃣ “Check Your Work” Validation Points
+
+After running your script (`python langgraph_system.py`), you can verify its success:
+
+*   **Ollama Connection:** The first line of output should be "Ollama connection successful."
+*   **Node Execution:** You should see the print statements from each node: "--- Researcher Node ---" followed by "--- Writer Node ---".
+*   **Final Output:** The script should print a final blog post to the console. The content of the post will vary, but it should be a coherent article about the "latest advancements in AI."
+
+### 7️⃣ Debugging & Failure Guide
+
+Agentic systems can be complex to debug. Here are some common problems you might encounter.
+
+*   **Symptom:** The script prints "Failed to connect to Ollama" and then "Skipping LangGraph execution..."
+    *   **Problem:** Your Python script cannot communicate with the local Ollama LLM server.
+    *   **How to Debug:**
+        1.  **Is Ollama running?** Make sure the Ollama application is open. On some systems, you may need to run the command `ollama serve` in a separate terminal.
+        2.  **Have you pulled a model?** You need to have at least one LLM downloaded. Run `ollama list` to see your models, or `ollama run llama2` to download and run the default model.
+        3.  **Firewall or Network Issues:** Ensure that no firewall is blocking the connection to Ollama, which typically runs on `http://localhost:11434`.
+
+*   **Symptom:** A node runs, but the next node doesn't seem to get the data. You see an error like `KeyError: 'research_notes'`.
+    *   **Problem:** The node that was supposed to add data to the state didn't return it in the correct format.
+    *   **How to Debug:**
+        1.  **Check the `return` statement:** The function for each node **must** return a dictionary where the keys match the keys in the `AgentState` `TypedDict`. For example, `researcher_node` must `return {"research_notes": notes}`. If it just returns `notes`, LangGraph won't know which field in the central state to update.
+        2.  **Check for Typos:** Ensure the key in your return dictionary (`"research_notes"`) exactly matches the key in the `AgentState` definition.
+
+*   **Symptom:** The graph fails to compile or run, with a validation error about cycles or missing entry points.
+    *   **Problem:** The structure of your graph is invalid.
+    *   **How to Debug:**
+        1.  **Missing Entry Point:** Make sure you have `workflow.set_entry_point("your_first_node")`. Every graph needs a beginning.
+        2.  **Incomplete Path:** Every node must have a path that eventually leads to `END`. If you add a node but don't add an edge leading from it to another node (or to `END`), the graph is a dead end.
+        3.  **Check Your Edges:** Double-check the string names in your `workflow.add_edge("source_node", "destination_node")` calls. A typo here is a common cause of errors.
+
+### 8️⃣ Versioned Growth Path
+
+This project is designed to be built in stages, from a simple linear chain to a more intelligent, dynamic graph.
+
+*   **v0.1 — The Core Workflow (You are here):**
+    *   **What Changed:** You’ve built a two-agent system where a Researcher passes notes to a Writer. The workflow is a simple, fixed sequence.
+    *   **Why it Mattered:** This establishes the fundamental pattern of a multi-agent system: defining state, creating nodes, and connecting them in a graph. It validates that your agents can communicate.
+
+*   **v0.2 — Tool-Using Agent:**
+    *   **What to Change:** The current `researcher_node` just asks the LLM for what it already knows. Upgrade this agent by giving it a **tool**, like a real web search tool (e.g., Tavily or DuckDuckGo search through LangChain). Now, the agent can find real-time information.
+    *   **Why it Matters:** This is the first step toward a true agentic system. Agents that can interact with the outside world are exponentially more powerful than those that can't.
+
+*   **v1.0 — The Autonomous System (with conditional logic):**
+    *   **What to Change:** Add a `gatekeeper_node` after the researcher. This node will use an LLM to decide if the research is high-quality enough to pass to the writer. Then, use `workflow.add_conditional_edges()` to create a dynamic flow: if the research is good, go to the `writer`; if not, loop back to the `researcher` to try again.
+    *   **Why it Matters:** This introduces **autonomy**. The system can now reflect on its own work and decide on the next best action, creating a more robust and intelligent workflow.
+
+### 9️⃣ Personalization Hooks (MANDATORY)
+
+To make this project your own, you must choose **at least one** of these paths to demonstrate that you can build on a foundational design.
+
+*   **Why Personalization Matters:** In an interview, being able to say "I followed the tutorial, and then I added..." is far more impressive than just showing the base project. It proves you are a creative and independent engineer.
+
+*   **Personalization Options:**
+    *   **Feature Variation: Human-in-the-Loop:** This is a critical pattern for reliable AI systems. Add a node to your graph that pauses execution and waits for human approval. The node could print the research notes and ask the user "Proceed to writing? (yes/no)". Use a conditional edge based on the user's input to either continue to the writer or end the workflow.
+    *   **Architecture Enhancement: Parallel Execution:** Modify the graph to perform tasks in parallel. For example, you could create two different researcher agents (`researcher_A` and `researcher_B`) that research different aspects of the topic at the same time. Their results would then be passed to a third `aggregator_node` that combines their notes before passing them to the writer.
+    *   **Tooling Enhancement: Add State Persistence:** For long-running or expensive workflows, you don't want to lose your progress if the script crashes. Use LangGraph's built-in `checkpointer` features to save the state of the graph after every step (e.g., to a local SQLite database). This allows you to resume the workflow from the exact point where it left off.
+
+### 1️⃣0️⃣ Testing & Validation
+
+Testing agentic systems can be tricky because of the non-deterministic nature of LLMs. We will focus on testing the flow and the state transformations.
+
+*   **What “Correct Behavior” Means:**
+    *   The script runs without crashing.
+    *   Each node in the graph executes in the correct order as defined by the edges.
+    *   The state is correctly passed between nodes (i.e., the `writer_node` receives the `research_notes` created by the `researcher_node`).
+    *   The final state contains a non-empty `final_output`.
+
+#### Manual Test Cases
+
+| Test Case | Input (`topic`) | Expected Behavior |
+| --- | --- | --- |
+| **1. Standard Case** | `"The history of the internet"` | The script should print "--- Researcher Node ---", then "--- Writer Node ---". It should then print a final blog post about the history of the internet. The `research_notes` and `final_output` fields of the state should be populated. |
+| **2. Edge Case (Trivial Topic)** | `"a cat"` | The script should still run successfully. The `research_notes` should be a simple overview of cats, and the `final_output` should be a short blog post about cats. This tests that the system is robust to simple, non-complex topics. |
+
+### 1️⃣1️⃣ Production Thinking (Reflection Only)
+
+This simple two-agent system is a great start. What would happen if we deployed it as a real application?
+
+*   **What would break at scale?**
+    *   **Infinite Loops:** Our v1.0 design includes a conditional loop (`Researcher` -> `Gatekeeper` -> `Researcher`). What happens if the researcher is never able to produce "good enough" research? The system could get stuck in this loop forever, consuming resources and never producing an output. A production system would need a "max retries" counter in the state to break out of the loop after a certain number of attempts.
+    *   **LLM Rate Limits:** Our system makes multiple calls to an LLM. If we were using a cloud API like OpenAI, and we had many users running this workflow at once, we could easily hit the API's rate limits, causing our application to fail. A production system needs robust error handling, backoff-and-retry logic, and potentially a load balancer to distribute calls across multiple API keys.
+
+*   **What would need monitoring?**
+    *   **Cost per Run:** Every LLM call costs money. We would need to track the number of LLM calls per workflow invocation to understand and control our costs. If a workflow gets stuck in a loop, costs could spiral out of control.
+    *   **Latency per Node:** We would need to monitor the time it takes for each node to run. If the `researcher_node` suddenly becomes very slow, it might indicate a problem with our tool (e.g., the web search API is down).
+    *   **Graph Trajectory:** We would want to log the path that each workflow takes through the graph. How often does the `gatekeeper` send the workflow back to the researcher? This information is invaluable for understanding and improving the system's behavior.
+
+*   **One Security Concern:**
+    *   **Tool-Related Prompt Injection:** Giving an agent a tool, especially a web search tool, opens up a new attack vector. A malicious user could craft a topic that tricks the researcher into searching for and retrieving harmful content from the web. This content could then be passed to the writer agent and potentially included in the final output. Production systems need strict validation and sanitization of any data retrieved from external tools.
+
+### 1️⃣2️⃣ Demo & Portfolio Guide
+
+Showcasing an agentic system is about explaining the *process*, not just the final output.
+
+*   **How to Run the Demo:**
+    1.  Make sure your Ollama server is running.
+    2.  Open a terminal in the project directory.
+    3.  Run the script: `python langgraph_system.py`.
+    4.  The script will print the node activity to the console, followed by the final, generated blog post.
+
+*   **What to Screenshot or Record:**
+    *   **The Code:** Take a screenshot of the graph definition block. This is the "control panel" of your system and clearly shows the workflow you designed.
+    *   **The Terminal Output:** The printouts showing the nodes executing in order ("--- Researcher Node ---", "--- Writer Node ---") are the best evidence of your multi-agent system in action.
+    *   **The Final Article:** Include the generated blog post as the final output of your demo.
+
+*   **How to Present This Project:**
+
+    *   **In Your README:**
+        > "I built a multi-agent AI system for research and writing using LangGraph. The system is designed as a stateful graph where a 'Researcher' agent first gathers information on a topic, then passes its findings to a 'Writer' agent, which composes a blog post. This project demonstrates how to orchestrate multiple LLM-powered agents in a structured and predictable workflow."
+
+    *   **On Your Resume:**
+        > **Multi-Agent Research System:** Designed and built a collaborative multi-agent system using Python and LangGraph. The system orchestrates a workflow between a researcher agent and a writer agent to autonomously generate articles from a given topic, demonstrating skills in agentic design and stateful AI workflows.
+
+    *   **In an Interview (Sample Talking Points):**
+        > "I was interested in moving beyond single-shot LLM calls and exploring how to make agents collaborate. I used LangGraph to build a simple research and writing team. The key architectural decision was to use a graph to explicitly define the workflow and a shared state object for communication. This is more robust than a simple script because it's auditable—you can see exactly how the state changes at each step. I also considered how this would scale, realizing that for more complex tasks, I would need to add conditional logic and cycles to the graph, which LangGraph is specifically designed for."
+
+### 1️⃣3️⃣ Interview Prep Section
+
+Be ready to discuss the architecture and the trade-offs of your design.
+
+*   **Question 1: Can you explain the architecture of this system? Why did you choose a graph-based approach?**
+    *   **Answer Outline:**
+        *   Describe the three main components: the shared state (`AgentState`), the nodes (the Python functions for each agent), and the graph that defines the workflow.
+        *   Explain that the graph makes the workflow explicit and easy to understand, as opposed to a complex series of `if/else` statements.
+        *   Mention that LangGraph is specifically designed for agentic systems, which often require cycles (loops), and that a graph is a natural way to represent these complex flows.
+
+*   **Question 2: How do the agents in your system communicate with each other?**
+    *   **Answer Outline:**
+        *   The key concept is the **shared state object**.
+        *   Explain that each node in the graph receives the current state.
+        *   When a node finishes, it returns a dictionary containing only the parts of the state it has changed.
+        *   LangGraph then automatically updates the central state with this new information before passing it to the next node. This is how the "research notes" from the researcher are made available to the writer.
+
+*   **Question 3: What is a conditional edge in LangGraph and why is it useful?**
+    *   **Answer Outline:**
+        *   A conditional edge allows the graph to dynamically choose the next node to execute based on the current state.
+        *   Give a concrete example: after a "research" node, you could have a "gatekeeper" node that checks the quality of the research. The conditional edge would read the output of the gatekeeper and route the workflow to the "writer" if the quality is high, or back to the "researcher" if it's low.
+        *   Explain that this enables loops and self-correction, making the agentic system more autonomous and robust.
+
+*   **Question 4: Your "Researcher" agent doesn't use any external tools. How would you give it the ability to search the web?**
+    *   **Answer Outline:**
+        *   This shows you can think about making agents more powerful.
+        *   Mention that you would need a search tool, like the Tavily search tool, which is integrated with LangChain.
+        *   You would then create a new "tool-using agent" using LangChain's agent creation APIs. This agent would be given the search tool and an LLM.
+        *   This new, more powerful agent would then be used as the `researcher_node` in your graph.
+
+*   **Question 5: What are some of the challenges of debugging a multi-agent system like this one?**
+    *   **Answer Outline:**
+        *   **Non-determinism:** The LLM can give a slightly different answer each time, which can make a bug hard to reproduce.
+        *   **State Management:** It can be hard to track how the state is changing, especially in a complex graph with many nodes. This is why having clear print statements or using LangSmith (a LangChain-native observability tool) is important.
+        *   **Prompt Engineering:** If a node is not behaving as expected, the problem is often in the prompt given to the LLM. You need to debug the prompt itself to guide the agent's behavior, which is more of an art than a science.
+
+---
