@@ -1,0 +1,1 @@
+Read guide.txt, ENGINEERING_DECISIONS.md, and real_time_assistant.py. Build the Real-Time AI Assistant using LangChain + RAG (sentence-transformers + chromadb). Setup venv, install requirements.txt. Run interactive Q&A demo. Write BUILD_LOG.md.
