@@ -1,0 +1,34 @@
+## 22. Building a Diffusion Model From Scratch (Python)
+
+### Description
+This project is a deep dive into the inner workings of diffusion models. You will build a Denoising Diffusion Probabilistic Model (DDPM) from scratch to generate images of handwritten digits from the MNIST dataset. You will implement the two key processes: the forward noising process and the reverse denoising process, building a U-Net model to predict the noise at each step.
+
+### Prerequisites
+PyTorch, CNN/U-Net basics, training loops, understanding of noise schedules.
+
+### Resources
+MNIST dataset; linear beta schedule configuration.
+
+### Project Workflow
+The project starts with defining the variance schedule (the `beta` schedule), which controls how much noise is added at each timestep. You will then implement the forward noising process (`q_sample`), a function that can take an image and add a specific amount of noise corresponding to a given timestep.
+
+The core of the project is building and training the denoising model, which is typically a U-Net architecture. You will implement the U-Net from scratch in PyTorch. The training loop will involve taking an image from the MNIST dataset, adding a random amount of noise, and training the U-Net to predict the noise that was added.
+
+Once the model is trained, you will implement the reverse sampling process (`p_sample`). This involves starting with pure noise and iteratively applying the trained U-Net to denoise it over many timesteps, until a clean image is generated.
+
+### Lab steps
+1. Define beta schedule across timesteps.
+2. Implement forward noising (`q_sample`).
+3. Implement U-Net architecture for noise prediction.
+4. Implement reverse sampling step (`p_sample`).
+5. Train to minimize difference between true noise and predicted noise.
+6. Generate digits by iterating reverse process from noise.
+
+---
+
+### How you may enhance this project
+- **Implement Conditional Generation:** A simple diffusion model can only generate random digits. A great enhancement is to implement conditional generation. This involves modifying the U-Net architecture and the training process to accept a class label (i.e., the digit you want to generate) as an additional input. This will allow you to control which digit the model generates.
+- **Experiment with Different Noise Schedules:** The choice of noise schedule can have a significant impact on the performance of the model. The standard linear schedule is a good starting point, but you can experiment with other schedules, such as a cosine or sigmoid schedule, and analyze how they affect the quality of the generated images and the speed of convergence.
+- **Train on Higher-Resolution and More Complex Datasets:** MNIST is a simple dataset. For a more impressive project, train your diffusion model on a dataset with higher-resolution or more complex images, such as CIFAR-10 (color images of objects) or a subset of CelebA (faces). This will likely require a larger U-Net model and more training time, but will result in a much more capable model.
+- **Implement Faster Sampling with DDIM:** The standard DDPM sampling process can be very slow as it requires hundreds or thousands of steps. Implement the Denoising Diffusion Implicit Models (DDIM) sampling method. DDIM is a more efficient sampler that can generate high-quality images in far fewer steps, making your model much more practical to use.
+- **Explore Classifier-Free Guidance:** For conditional models, classifier guidance is a common technique to improve image quality, but it requires training a separate classifier model. A more advanced technique is to implement classifier-free guidance, which achieves the same goal by training the diffusion model with a certain percentage of the conditioning dropped out. This is a key technique used in modern large-scale diffusion models.

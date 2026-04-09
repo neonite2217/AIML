@@ -1,0 +1,1 @@
+Read guide.txt and diffusion_from_scratch.py. Implement DDPM diffusion model from scratch using PyTorch (train on MNIST or CIFAR-10). Setup venv, install requirements.txt. Train for a few epochs, save sample outputs. Write BUILD_LOG.md.
