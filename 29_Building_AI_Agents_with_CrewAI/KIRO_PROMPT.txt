@@ -1,0 +1,1 @@
+Read guide.txt and crewai_agents.py. Build CrewAI multi-agent system (use free LLM backend via ollama or transformers). Setup venv, install requirements.txt. Run a demo task with multiple agents. Write BUILD_LOG.md.

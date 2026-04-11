@@ -1,0 +1,33 @@
+## 16. Building AI Agents with CrewAI (Python)
+
+### Description
+This project introduces the concept of multi-agent systems using CrewAI. Instead of a single monolithic model, you will coordinate multiple, specialized AI agents that collaborate to solve a complex task. Each agent is given a unique role, goal, and backstory, and they work together in a structured workflow, handing off tasks and information to one another.
+
+### Prerequisites
+Python, basic agent orchestration concepts, running local LLMs (GGUF via llama-cpp).
+
+### Resources
+Mistral-7B-Instruct GGUF model; CrewAI; llama-cpp-python.
+
+### Project Workflow
+The project starts by setting up the LLM that will power your agents. You will load a local GGUF model (like Mistral-7B) using `llama-cpp-python` and create a wrapper so that it can be used seamlessly with the CrewAI framework.
+
+Next, you will define your agents. This is the creative part of the process, where you will assign each agent a specific role (e.g., "market researcher," "content writer"), a goal, and a backstory to guide its behavior.
+
+Once the agents are defined, you will create the tasks they need to perform. Each task is a discrete unit of work with a clear expected output. You will then assemble these agents and tasks into a `Crew`. The final step is to "kick off" the crew and let the agents collaborate to produce a final, combined output that accomplishes the overall goal.
+
+### Lab steps
+1. Load local GGUF model with llama-cpp.
+2. Wrap model so CrewAI can call it.
+3. Define agents with roles, goals, backstories.
+4. Define tasks and expected outputs per agent.
+5. Create a Crew and run kickoff; review combined output.
+
+---
+
+### How you may enhance this project
+- **Dynamic Task Creation with a Manager Agent:** Instead of a predefined, fixed set of tasks, create a "manager" or "orchestrator" agent. This agent's role is to review the results of previous tasks and dynamically create new tasks as needed. This allows the crew to adapt to unexpected information and pursue new lines of inquiry, making the system much more flexible and powerful.
+- **Equip Agents with Custom Tools:** An agent is only as good as its tools. Give your agents the ability to interact with the outside world by creating custom tools. This could be a tool to search the web for real-time information, a tool to read and write files from the local filesystem, or a tool to call an external API (e.g., to get stock prices or weather data).
+- **Implement a Human-in-the-Loop Workflow:** For many tasks, full automation is not desirable. Add a human-in-the-loop component where the agent crew can pause at critical junctures and ask for clarification, approval, or direction from a human user. This is a key feature for building responsible and reliable agentic systems.
+- **Persistent Memory and State:** Allow your crew to learn from past interactions. Implement a more sophisticated memory mechanism (e.g., using a vector database) that allows agents to retain information across multiple runs. An agent could "remember" that a previous line of research was a dead end and avoid it in the future, leading to more efficient operation over time.
+- **Build a Collaborative Writing Team:** A classic use case for multi-agent systems is collaborative content creation. Create a crew of agents to write a blog post or a report. You could have a "researcher" agent to gather information, a "writer" agent to draft the content, an "editor" agent to proofread and refine the text, and a "critic" agent to provide feedback on the overall quality.

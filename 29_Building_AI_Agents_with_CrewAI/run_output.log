@@ -1,0 +1,31 @@
+Loading model from /var/home/ansh/Projects/super_30/mistral-7b-instruct-v0.1.Q4_K_M.gguf...
+Model loaded. Settings: max_new_tokens=96, temperature=0.2, context_length=1024
+Using Lite Crew shim (set USE_REAL_CREWAI=1 to try real CrewAI).
+
+Starting the Crew Kickoff...
+
+
+--- Executing Task 1 ---
+
+[Agent: Senior Research Analyst] starting task...
+[Agent: Senior Research Analyst] completed task in 31.0s.
+
+--- Executing Task 2 ---
+
+[Agent: Tech Content Strategist] starting task...
+[Agent: Tech Content Strategist] completed task in 47.5s.
+
+########################
+## Final Result:
+########################
+
+Intro:
+
+* XAI, NLP, and Predictive Maintenance are three of the most exciting trends in tech today.
+* These technologies have the potential to revolutionize how we interact with machines and improve efficiency across various industries.
+
+Closing:
+
+* As these trends continue to evolve, they will undoubtedly shape the future of technology and its impact on our daily lives.
+
+Saved final output to final_result.txt
