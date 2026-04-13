@@ -1,0 +1,34 @@
+## 10. Building a Large Language Model from Scratch (Python)
+
+### Description
+This project is a deep dive into the fundamental components of a Large Language Model (LLM). By building a simple transformer-based language model from scratch using PyTorch, you will gain a thorough understanding of the key architectural elements, including tokenization, embeddings, positional encoding, self-attention, and the transformer block. The goal is not to build a state-of-the-art model, but to understand the mechanics of how these models work.
+
+### Prerequisites
+Python, PyTorch, linear algebra basics, attention/transformer concepts.
+
+### Resources
+Small custom text samples and vocabulary.
+
+### Project Workflow
+The project starts with the most basic building block: tokenization. You will implement a simple word-to-ID mapping for a small, custom vocabulary. Next, you will create an embedding layer that maps these token IDs to dense vector representations. A crucial step follows: implementing positional encoding, which injects information about the order of the tokens into the model.
+
+The core of the project is implementing the self-attention mechanism from scratch. You will build the logic for calculating query, key, and value matrices and computing the attention weights. You will then use this to build a full transformer block, which includes the self-attention layer and a feed-forward neural network.
+
+Finally, you will stack these transformer blocks to create your language model. You will train the model on a simple next-token prediction task using a small text sample and the Cross-Entropy Loss function, and then use it to generate new text.
+
+### Lab steps
+1. Implement tokenization (word→id mapping).
+2. Create embedding layer to map ids to vectors.
+3. Add positional encoding to inject order information.
+4. Implement self-attention and attention weights.
+5. Build transformer block (attention + feed-forward).
+6. Train with next-token objective (CrossEntropyLoss).
+
+---
+
+### How you may enhance this project
+- **Scale Up Your Model and Data:** To see your model's true potential, scale it up. Train it on a larger, more complex dataset like TinyStories or a curated subset of Wikipedia. You will also need to scale up the model itself, by increasing the embedding size, adding more transformer blocks, and training for more epochs. This will give you a better sense of the challenges involved in training large models.
+- **Implement Architectural Improvements:** The basic transformer architecture has many variants. Implement some of these to improve your model. For example, experiment with different placements of the Layer Normalization (pre-norm vs. post-norm), or replace the standard positional encoding with more advanced techniques like Rotary Positional Embedding (RoPE), which is used in many modern LLMs.
+- **Advanced Subword Tokenization:** Word-level tokenization is simple but limited. A great enhancement is to implement a more advanced subword tokenization algorithm like Byte-Pair Encoding (BPE). This allows the model to handle out-of-vocabulary words and can lead to a more efficient and effective model.
+- **Systematic Evaluation and Benchmarking:** To properly measure your model's performance, evaluate it on standard NLP benchmarks. Calculate the perplexity of the model on a held-out test set to measure its language modeling ability. You can also fine-tune your pre-trained model on downstream tasks like text classification to see how well it has learned to represent language.
+- **Inference Optimization for Speed:** Generating text with a transformer can be slow. Implement techniques to optimize the inference speed. A key technique to explore is quantization, where you reduce the precision of the model's weights (e.g., from 32-bit floats to 8-bit integers). For a more advanced challenge, try implementing a simplified version of Flash Attention to speed up the self-attention calculation.

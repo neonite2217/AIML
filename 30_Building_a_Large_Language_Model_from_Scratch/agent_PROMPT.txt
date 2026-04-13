@@ -1,0 +1,1 @@
+Read guide.txt and llm_from_scratch.py. Build a small GPT-like LLM from scratch using PyTorch. Train on a small text corpus. Setup venv, install requirements.txt. Run inference demo. Write BUILD_LOG.md.
