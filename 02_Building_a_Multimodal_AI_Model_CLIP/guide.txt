@@ -1,0 +1,33 @@
+## 15. Building a Multimodal AI Model (CLIP) (Python)
+
+### Description
+Multimodal AI models can understand and process information from multiple modalities, like images and text, simultaneously. This project introduces you to CLIP (Contrastive Language-Image Pre-Training), a powerful model from OpenAI that embeds images and text into the same vector space. You will learn how to use CLIP to find the best text description for a given image by comparing the similarity of their embeddings.
+
+### Prerequisites
+PyTorch basics, embeddings, cosine similarity, PIL image handling, transformers.
+
+### Resources
+CLIP model (`clip-vit-base-patch32`); a local image file; candidate caption list.
+
+### Project Workflow
+The project starts with loading the pre-trained CLIP model and its associated processor from the Hugging Face `transformers` library. You will then load a local image using the Pillow (PIL) library.
+
+The next step is to prepare your inputs for the model. You will use the CLIP processor to convert your image into a tensor, and to tokenize a list of candidate text captions. You will then feed these processed inputs to the CLIP model to get the image and text embeddings. These embeddings are vectors that represent the semantic content of the image and the text captions.
+
+The core of the project is to calculate the cosine similarity between the single image embedding and the list of text embeddings. By finding the text embedding with the highest similarity score, you can determine which caption best describes the image. The final step is to sort the results and display the top matches.
+
+### Lab steps
+1. Load and preprocess an image into tensor format.
+2. Extract image embedding using CLIP.
+3. Encode candidate captions to text embeddings.
+4. Compute cosine similarity image↔text embeddings.
+5. Sort similarities and return top matches.
+
+---
+
+### How you may enhance this project
+- **Image-to-Image Search Engine:** A great application of CLIP is building a reverse image search engine. Create a dataset of images and pre-compute their embeddings. Then, given a new query image, you can find the most visually similar images in your dataset by finding the ones with the closest embedding vectors in the vector space. This demonstrates a practical application of similarity search.
+- **Zero-Shot Object Detection:** You can use CLIP to perform object detection without any training on bounding boxes. Create a sliding window that moves across the image. For each window, crop the image and get its CLIP embedding. Compare this embedding to the text embeddings of different objects (e.g., "a photo of a cat", "a photo of a dog"). The window with the highest similarity to a given text prompt likely contains that object. This is a creative and impressive use of CLIP's capabilities.
+- **Domain-Specific Fine-tuning:** CLIP is pre-trained on a massive dataset from the web, but it may not be an expert in a specific domain. Fine-tune the CLIP model on a curated dataset of image-caption pairs from a specific field, like fashion, medical imaging, or satellite imagery. This will significantly improve its performance on that domain and is a hallmark of an advanced project.
+- **Multimodal Search Web App:** Build a web application that allows users to perform multimodal search. The user should be able to either type a text query to find relevant images, or upload an image to find other similar images or relevant text descriptions. This creates a compelling and interactive portfolio piece.
+- **CLIP-Guided Image Generation:** Use CLIP's ability to measure the similarity between an image and a text prompt to guide a generative model. This is the core idea behind models like DALL-E 2 and Stable Diffusion. You can implement a simplified version of this by starting with a pre-trained generative model (like a GAN) and then using CLIP's similarity score as a loss function to steer the generation process towards a target text prompt.
