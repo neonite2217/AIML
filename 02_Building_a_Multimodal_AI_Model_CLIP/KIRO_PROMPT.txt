@@ -1,1 +1,0 @@
-Read guide.txt and clip.py. Implement the CLIP Multimodal AI model using HuggingFace openai/clip-vit-base-patch32. Setup venv, install requirements.txt. Run a demo with a sample image URL and text queries. Write BUILD_LOG.md.
