@@ -1,1 +1,0 @@
-Read guide.txt and agentic_rag.py. Complete the Agentic RAG Pipeline — agent should decide when to retrieve and when to answer directly. Use sentence-transformers + chromadb. Use existing venv. Run against agentic_rag_doc.pdf. Write BUILD_LOG.md.

@@ -1,8 +1,0 @@
-chromadb
-pypdf
-transformers
-torch
-sentence-transformers
-reportlab
-langchain
-langchain-community
