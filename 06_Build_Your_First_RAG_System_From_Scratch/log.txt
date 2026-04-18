@@ -1,0 +1,151 @@
+BUILD LOG - RAG System From Scratch
+====================================
+
+Date: 2026-02-01
+Project: Build Your First RAG System From Scratch
+
+PROJECT OVERVIEW:
+-----------------
+This project demonstrates a Retrieval-Augmented Generation (RAG) system built from scratch in Python. The system allows Large Language Models (LLMs) to answer questions based on a private knowledge base.
+
+PROJECT STRUCTURE:
+------------------
+1. guide.txt         - Project description and workflow documentation
+2. requirements.txt  - Python dependencies (faiss-cpu, sentence-transformers, transformers, torch)
+3. my_knowledge.txt  - Sample knowledge base with information about Gemini model
+4. rag_from_scratch.py - Main implementation file
+
+RAG PIPELINE ARCHITECTURE:
+---------------------------
+The system implements a 6-step RAG pipeline:
+
+Step 1: Text Chunking
+- Loads my_knowledge.txt (creates dummy data if not exists)
+- Splits text into smaller, non-overlapping chunks (line-based)
+- Each line becomes a separate chunk
+
+Step 2: Embedding Creation
+- Uses SentenceTransformer with 'all-MiniLM-L6-v2' model
+- Converts text chunks into 384-dimensional numerical vectors
+- Enables semantic similarity search
+
+Step 3: Vector Store (FAISS)
+- Creates FAISS IndexFlatL2 index (L2 distance metric)
+- Stores all chunk embeddings in the index
+- Enables efficient similarity search at scale
+
+Step 4: Query Embedding & Retrieval
+- Embeds user query using the same sentence transformer
+- Searches FAISS index for top-k most similar chunks
+- Returns indices and distances of closest matches
+
+Step 5: Prompt Template Construction
+- Combines retrieved chunks with original query
+- Creates structured prompt for the LLM
+- Format: "Context: {retrieved_chunk}\nQuestion: {query}\nAnswer:"
+
+Step 6: Answer Generation
+- Uses Hugging Face question-answering pipeline
+- Model: distilbert-base-cased-distilled-squad
+- Generates answer grounded in retrieved context
+
+KEY TECHNOLOGIES:
+-----------------
+- FAISS (Facebook AI Similarity Search) - Vector indexing and retrieval
+- Sentence Transformers - Text embedding (all-MiniLM-L6-v2)
+- Transformers - Question answering pipeline (DistilBERT)
+- PyTorch - Backend for neural network computations
+
+SAMPLE QUERY:
+-------------
+Query: "Who created the Gemini model?"
+Knowledge Base:
+  - The Gemini model series was created by Google AI.
+  - It is a multimodal model, capable of understanding text, images, and audio.
+  - The first version of Gemini was released in December 2023.
+
+Expected Output:
+  - Retrieved Context: "The Gemini model series was created by Google AI."
+  - Answer: "Google AI"
+
+DEPENDENCY CHALLENGES:
+----------------------
+During build, encountered disk space limitations with full torch installation.
+Solution approach:
+1. Created Python virtual environment for isolation
+2. Installed core packages: faiss-cpu, sentence-transformers, transformers
+3. Installed supporting dependencies: numpy, packaging, huggingface-hub, etc.
+4. torch installation required due to sentence-transformers dependency
+
+ENHANCEMENT OPPORTUNITIES:
+--------------------------
+Per guide.txt, potential improvements include:
+1. Persistent Vector Store - Save FAISS index to disk and load on startup
+2. Source-Cited Answers - Display retrieved chunks alongside answer
+3. Web Interface - Use Streamlit or Gradio for interactive Q&A
+4. Better Embeddings - Experiment with MTEB leaderboard models
+5. Handle "I don't know" - Check confidence scores to avoid hallucinations
+
+INSTALLATION NOTES:
+-------------------
+Required packages (from requirements.txt):
+- faiss-cpu
+- sentence-transformers
+- transformers
+- torch
+
+Virtual environment recommended to avoid conflicts.
+
+BUILD STATUS:
+-------------
+Core script structure analyzed and understood.
+Dependencies identified and installation completed.
+Build SUCCESSFUL - all tests passed.
+
+DEPENDENCY INSTALLATION COMPLETED:
+----------------------------------
+1. Created Python virtual environment (venv/)
+2. Installed core packages: faiss-cpu, sentence-transformers, transformers
+3. Installed CPU-only torch (2.10.0+cpu) to save disk space
+4. Installed supporting dependencies:
+   - numpy (2.4.2)
+   - packaging (26.0)
+   - huggingface-hub (1.3.5)
+   - scikit-learn (1.8.0)
+   - scipy (1.17.0)
+   - tqdm, regex, tokenizers, safetensors, etc.
+
+BUILD COMPLETION SUMMARY:
+-------------------------
+Status: SUCCESS
+Build Date: 2026-02-01
+Execution: Script ran successfully
+
+TEST RESULTS:
+-------------
+Query: "Who created the Gemini model?"
+Retrieved Context: "The Gemini model series was created by Google AI."
+Answer: "Google AI"
+
+Execution verified all 6 RAG pipeline steps:
+1. Text Chunking - Created 3 chunks from knowledge base
+2. Embedding Creation - Generated embeddings with all-MiniLM-L6-v2
+3. Vector Store - FAISS IndexFlatL2 index created
+4. Query Embedding & Retrieval - Top-1 chunk retrieved
+5. Prompt Template - Context + question formatted
+6. Answer Generation - distilbert-base-cased-distilled-squad produced answer
+
+NEXT STEPS FOR ENHANCEMENT:
+---------------------------
+1. Enhance with persistent FAISS index
+2. Add source citations to output
+3. Consider web interface implementation (Streamlit/Gradio)
+4. Add "I don't know" handling for low confidence queries
+5. Experiment with different embedding models (MTEB leaderboard)
+
+DEVELOPER NOTES:
+----------------
+- The RAG system is lightweight and modular
+- Each step (chunking, embedding, retrieval, generation) is clearly separated
+- Easy to swap components (different embedding models, LLMs, etc.)
+- Knowledge base is simple text file - easily replaceable
