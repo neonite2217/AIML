@@ -1,3 +1,0 @@
-The Gemini model series was created by Google AI.
-It is a multimodal model, capable of understanding text, images, and audio.
-The first version of Gemini was released in December 2023.

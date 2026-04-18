@@ -1,6 +1,0 @@
-*
-!.gitignore
-!logs/
-logs/*
-!logs/dev_log.md
-!logs/.gitkeep

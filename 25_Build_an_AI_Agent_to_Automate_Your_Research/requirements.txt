@@ -1,0 +1,6 @@
+duckduckgo-search
+beautifulsoup4
+sentence-transformers
+torch
+requests
+ctransformers
