@@ -1,1 +1,0 @@
-Read guide.txt, ENGINEERING_DECISIONS.md, and research_agent.py. Build the AI Research Automation Agent using free tools (DuckDuckGo search, HuggingFace models). Setup venv, install requirements.txt. Run on a sample research query. Write BUILD_LOG.md.
